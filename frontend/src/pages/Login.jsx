@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Navigate, useNavigate, } from "react-router-dom";
 import { girisYap } from "../services/deneme";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
+  const {giris}= useAuth();
   const [email, setEmail] = useState("");
   const [sifre, setSifre] = useState("");
   const [hata, setHata] = useState("");
@@ -16,6 +18,9 @@ function Login() {
       setHata("E-Posta veya şifre hatalı")
       return;
     }
+
+    giris(kullanici);
+
     if(kullanici.rol=== "yetkili") {
       navigate("/yetkili");
     }else{
