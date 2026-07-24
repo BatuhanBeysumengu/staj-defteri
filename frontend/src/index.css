@@ -134,3 +134,120 @@ input:focus {
 .entry-card__durum--bekliyor { background: var(--renk-bekliyor); }
 .entry-card__durum--onaylandi { background: var(--renk-onaylandi); }
 .entry-card__durum--reddedildi { background: var(--renk-reddedildi); }
+
+.kayit-form {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+  margin-bottom: var(--bosluk-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-s);
+  align-items: flex-start;
+}
+
+.kayit-form textarea {
+  font: inherit;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: 6px;
+  resize: vertical;        
+}
+
+.kayit-form textarea:focus {
+  outline: 2px solid var(--renk-ana);
+  outline-offset: 1px;
+}
+.entry-card__ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.entry-card__ogrenci {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--renk-ana);
+}
+
+.bos-durum {
+  color: var(--renk-soluk);
+  text-align: center;
+  padding: var(--bosluk-l);
+}
+.entry-card__aksiyonlar {
+  display: flex;
+  gap: var(--bosluk-s);
+}
+
+.btn--tehlike {
+  background: var(--renk-reddedildi);
+}
+
+.btn--tehlike:hover {
+  background: #dc2626;
+}
+.home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bosluk-l);
+}
+
+.home__icerik {
+  max-width: 720px;
+  text-align: center;
+}
+
+.home__baslik {
+  font-size: 42px;
+  margin-bottom: var(--bosluk-m);
+  color: var(--renk-ana);
+}
+
+.home__aciklama {
+  font-size: 17px;
+  color: var(--renk-soluk);
+  margin-bottom: var(--bosluk-l);
+}
+
+.home__ozellikler {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--bosluk-m);
+  margin-top: 48px;
+  text-align: left;
+}
+
+.home__ozellik {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  box-shadow: var(--golge);
+  padding: var(--bosluk-m);
+}
+
+.home__ozellik h3 {
+  font-size: 16px;
+  margin-bottom: var(--bosluk-s);
+}
+
+.home__ozellik p {
+  font-size: 14px;
+  color: var(--renk-soluk);
+}
+
+.geri-link {
+  color: var(--renk-soluk);
+  text-decoration: none;
+  font-size: 14px;
+  align-self: flex-start;
+}
+
+.geri-link:hover {
+  color: var(--renk-ana);
+}

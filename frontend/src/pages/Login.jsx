@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate, } from "react-router-dom";
+import { Navigate, useNavigate,Link } from "react-router-dom";
 import { girisYap } from "../services/deneme";
 import { useAuth } from "../context/AuthContext";
 
@@ -29,6 +29,7 @@ function Login() {
   };
   return(
     <div className="login">
+      <Link to="/" className="geri-link">←Ana Sayfa</Link>
       <h1>Staj Defteri</h1>
       <p> Devam etmek için giriş yapın</p>
       <input

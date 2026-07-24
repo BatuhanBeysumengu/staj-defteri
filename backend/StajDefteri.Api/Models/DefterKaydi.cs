@@ -1,0 +1,10 @@
+namespace StajDefteri.Api.Models;
+
+public class DefterKaydi
+{
+    public int Id { get; set; }
+    public DateOnly Tarih { get; set; }
+    public string Icerik { get; set; } = string.Empty;
+    public string Durum { get; set; } = "bekliyor";
+    public int OgrenciId { get; set; }
+}

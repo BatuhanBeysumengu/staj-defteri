@@ -5,3 +5,8 @@ build/
 .env.local
 *.env
 .DS_Store
+*.db
+*.db-shm
+*.db-wal
+bin/
+obj/
