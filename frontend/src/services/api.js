@@ -13,6 +13,16 @@ export async function apiIstek(yol, secenekler = {}) {
 
   return cevap;
 }
+export async function benimProfilim() {
+  const cevap = await apiIstek("/kullanicilar/profil/benim");
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+export async function profilGetir(id) {
+  const cevap = await apiIstek(`/kullanicilar/profil/${id}`);
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
 export async function ocrIstek(dosya) {
   const token = localStorage.getItem("token");
   const form = new FormData();

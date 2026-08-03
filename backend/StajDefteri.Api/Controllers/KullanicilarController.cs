@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajDefteri.Api.Data;
@@ -7,7 +8,7 @@ using StajDefteri.Api.Dtos;
 namespace StajDefteri.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]         
+[Route("api/[controller]")]
 public class KullanicilarController : ControllerBase
 {
     private readonly AppDbContext _db;
@@ -16,6 +17,7 @@ public class KullanicilarController : ControllerBase
     {
         _db = db;
     }
+
     [HttpPost("ogrenci")]
     public async Task<IActionResult> OgrenciEkle(OgrenciEkleIstegi istek)
     {
@@ -27,13 +29,44 @@ public class KullanicilarController : ControllerBase
         {
             Ad = istek.Ad,
             Email = istek.Email,
-            Rol = "ogrenci",                                        
-            YetkiliId = istek.YetkiliId,                            
+            Rol = "ogrenci",
+            YetkiliId = istek.YetkiliId,
             SifreHash = BCrypt.Net.BCrypt.HashPassword(istek.Sifre)
         };
 
         _db.Kullanicilar.Add(yeniOgrenci);
         await _db.SaveChangesAsync();
         return Ok(new { yeniOgrenci.Id, yeniOgrenci.Ad, yeniOgrenci.Email });
+    }
+    [Authorize]
+    [HttpGet("profil/benim")]
+    public async Task<IActionResult> BenimProfilim()
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var kullanici = await _db.Kullanicilar.FindAsync(kullaniciId);
+        if (kullanici is null) return NotFound();
+
+        return Ok(new ProfilCevabi(
+            kullanici.Id,
+            kullanici.Ad,
+            kullanici.Email,
+            kullanici.Rol
+        ));
+    }
+
+    [Authorize]
+    [HttpGet("profil/{id}")]
+    public async Task<IActionResult> Profil(int id)
+    {
+        var kullanici = await _db.Kullanicilar.FindAsync(id);
+        if (kullanici is null) return NotFound();
+
+        return Ok(new ProfilCevabi(
+            kullanici.Id,
+            kullanici.Ad,
+            kullanici.Email,
+            kullanici.Rol
+        ));
     }
 }
