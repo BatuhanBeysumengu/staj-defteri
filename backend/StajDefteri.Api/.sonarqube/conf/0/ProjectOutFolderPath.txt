@@ -1,0 +1,1 @@
+C:\Users\batub\staj-defteri\backend\StajDefteri.Api\.sonarqube\out\0

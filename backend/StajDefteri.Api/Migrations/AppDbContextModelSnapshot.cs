@@ -34,6 +34,15 @@ namespace StajDefteri.Api.Migrations
                     b.Property<int>("OgrenciId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("RedAciklamasi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("RedTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ReddedenId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateOnly>("Tarih")
                         .HasColumnType("TEXT");
 
@@ -68,6 +77,35 @@ namespace StajDefteri.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("StajDefteri.Api.Models.IslemLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Detay")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Islem")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("KullaniciAd")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("KullaniciId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IslemLoglari");
+                });
+
             modelBuilder.Entity("StajDefteri.Api.Models.Kullanici", b =>
                 {
                     b.Property<int>("Id")
@@ -86,12 +124,16 @@ namespace StajDefteri.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SifreHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("YetkiliId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Kullancilar");
+                    b.ToTable("Kullanicilar");
 
                     b.HasData(
                         new
@@ -100,6 +142,7 @@ namespace StajDefteri.Api.Migrations
                             Ad = "Batuhan",
                             Email = "ogrenci@test.com",
                             Rol = "ogrenci",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa",
                             YetkiliId = 3
                         },
                         new
@@ -108,6 +151,7 @@ namespace StajDefteri.Api.Migrations
                             Ad = "Ayse",
                             Email = "ogrenci2@test.com",
                             Rol = "ogrenci",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa",
                             YetkiliId = 4
                         },
                         new
@@ -115,14 +159,16 @@ namespace StajDefteri.Api.Migrations
                             Id = 3,
                             Ad = "Ahmet Hoca",
                             Email = "yetkili@test.com",
-                            Rol = "yetkili"
+                            Rol = "yetkili",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         },
                         new
                         {
                             Id = 4,
                             Ad = "Zeynep Hoca",
                             Email = "yetkili2@test.com",
-                            Rol = "yetkili"
+                            Rol = "yetkili",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         });
                 });
 #pragma warning restore 612, 618

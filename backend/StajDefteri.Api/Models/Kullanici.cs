@@ -7,4 +7,5 @@ public class Kullanici
     public string Ad { get; set; } = string.Empty;
     public string Rol { get; set; } = string.Empty;   
     public int? YetkiliId { get; set; }
+    public string SifreHash { get; set; } = string.Empty;
 }

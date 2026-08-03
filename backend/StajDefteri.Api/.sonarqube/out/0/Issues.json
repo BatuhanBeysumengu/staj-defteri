@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Derleyicisi",
+        "version": "4.14.0.0",
+        "fileVersion": "4.14.0-3.26064.1 (450493a9)",
+        "semanticVersion": "4.14.0",
+        "language": "tr-TR"
+      },
+      "results": [
+        {
+          "ruleId": "S4792",
+          "level": "warning",
+          "message": "Make sure that this logger's configuration is safe.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/batub/staj-defteri/backend/StajDefteri.Api/Program.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 14,
+                  "endLine": 9,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1861",
+          "level": "note",
+          "message": "Çağrılan yöntem art arda çağrılırsa ve geçirilen diziyi değiştirmezse 'static readonly' alanları sabit dizi bağımsız değişkenlerine tercih edilir",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/batub/staj-defteri/backend/StajDefteri.Api/Migrations/20260730061141_IlkKurulum.cs",
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 26,
+                  "endLine": 54,
+                  "endColumn": 125
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "paramName": "columns"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1861",
+          "level": "note",
+          "message": "Çağrılan yöntem art arda çağrılırsa ve geçirilen diziyi değiştirmezse 'static readonly' alanları sabit dizi bağımsız değişkenlerine tercih edilir",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/batub/staj-defteri/backend/StajDefteri.Api/Migrations/20260730061141_IlkKurulum.cs",
+                "region": {
+                  "startLine": 64,
+                  "startColumn": 26,
+                  "endLine": 64,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "paramName": "columns"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1854",
+          "level": "note",
+          "message": "Çift aramayı önlemek için 'ContainsKey' denetimi tarafından korunan Sözlük dizin oluşturucu erişimi yerine 'TryGetValue' çağrısı tercih edin",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/batub/staj-defteri/backend/StajDefteri.Api/Controllers/KayitlarController.cs",
+                "region": {
+                  "startLine": 73,
+                  "startColumn": 37,
+                  "endLine": 73,
+                  "endColumn": 76
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/batub/staj-defteri/backend/StajDefteri.Api/Controllers/KayitlarController.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 19,
+                  "endLine": 74,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1854": {
+          "id": "CA1854",
+          "shortDescription": "'IDictionary.TryGetValue(TKey, out TValue)' yöntemini tercih edin",
+          "fullDescription": "'ContainsKey' denetimi tarafından korunan bir Sözlük dizin oluşturucu erişimi yerine 'TryGetValue' çağrısı tercih edin. 'ContainsKey' ve dizin oluşturucunun her ikisi de başlık altındaki anahtarı arayacağından 'TryGetValue' kullanmak, ek aramayı kaldırır.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1854",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1861": {
+          "id": "CA1861",
+          "shortDescription": "Sabit dizileri bağımsız değişkenler olarak kullanmaktan sakının",
+          "fullDescription": "Bağımsız değişkenler olarak geçirilen sabit diziler art arda çağrıldığında yeniden kullanılmaz, yani her seferinde yeni bir dizi oluşturulur. Geçirilen dizi çağrılan yöntem içinde değiştirilmezse performansı iyileştirmek için 'static readonly' alanlarına ayıklamayı deneyin.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1861",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "S4792": {
+          "id": "S4792",
+          "shortDescription": "Configuring loggers is security-sensitive",
+          "fullDescription": "Configuring loggers is security-sensitive. It has led in the past to the following vulnerabilities:",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4792",
+          "properties": {
+            "category": "Critical Security Hotspot",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

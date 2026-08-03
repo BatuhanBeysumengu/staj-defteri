@@ -11,8 +11,8 @@ using StajDefteri.Api.Data;
 namespace StajDefteri.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260724080643_IlkOlusturma")]
-    partial class IlkOlusturma
+    [Migration("20260730061141_IlkKurulum")]
+    partial class IlkKurulum
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,15 @@ namespace StajDefteri.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("OgrenciId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RedAciklamasi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("RedTarihi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ReddedenId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateOnly>("Tarih")
@@ -89,12 +98,16 @@ namespace StajDefteri.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SifreHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("YetkiliId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Kullancilar");
+                    b.ToTable("Kullanicilar");
 
                     b.HasData(
                         new
@@ -103,6 +116,7 @@ namespace StajDefteri.Api.Migrations
                             Ad = "Batuhan",
                             Email = "ogrenci@test.com",
                             Rol = "ogrenci",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa",
                             YetkiliId = 3
                         },
                         new
@@ -111,6 +125,7 @@ namespace StajDefteri.Api.Migrations
                             Ad = "Ayse",
                             Email = "ogrenci2@test.com",
                             Rol = "ogrenci",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa",
                             YetkiliId = 4
                         },
                         new
@@ -118,14 +133,16 @@ namespace StajDefteri.Api.Migrations
                             Id = 3,
                             Ad = "Ahmet Hoca",
                             Email = "yetkili@test.com",
-                            Rol = "yetkili"
+                            Rol = "yetkili",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         },
                         new
                         {
                             Id = 4,
                             Ad = "Zeynep Hoca",
                             Email = "yetkili2@test.com",
-                            Rol = "yetkili"
+                            Rol = "yetkili",
+                            SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         });
                 });
 #pragma warning restore 612, 618

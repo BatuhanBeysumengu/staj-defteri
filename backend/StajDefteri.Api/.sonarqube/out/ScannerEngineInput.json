@@ -1,0 +1,96 @@
+{
+  "scannerProperties": [
+    {
+      "key": "sonar.scanner.app",
+      "value": "ScannerMSBuild"
+    },
+    {
+      "key": "sonar.scanner.appVersion",
+      "value": "11.2.1"
+    },
+    {
+      "key": "sonar.scanner.bootstrapStartTime",
+      "value": "1785483511000"
+    },
+    {
+      "key": "sonar.projectKey",
+      "value": "staj-defteri"
+    },
+    {
+      "key": "sonar.working.directory",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\.sonarqube\\out\\.sonar"
+    },
+    {
+      "key": "sonar.projectBaseDir",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api"
+    },
+    {
+      "key": "sonar.pullrequest.cache.basepath",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api"
+    },
+    {
+      "key": "sonar.sources",
+      "value": ""
+    },
+    {
+      "key": "sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "sonar.modules",
+      "value": "709590D8-76B7-4A94-9ED4-EDBC25CA9582"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.projectKey",
+      "value": "staj-defteri:709590D8-76B7-4A94-9ED4-EDBC25CA9582"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.projectName",
+      "value": "StajDefteri.Api"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.projectBaseDir",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.working.directory",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\.sonarqube\\out\\.sonar\\mod0"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.sources",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Controllers\\AuthController.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Controllers\\KayitlarController.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Controllers\\KullanicilarController.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Data\\AppDbContext.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Dtos\\AuthDtos.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Dtos\\KayitDtos.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Dtos\\KullaniciDtos.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Migrations\\20260730061141_IlkKurulum.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Migrations\\20260730061141_IlkKurulum.Designer.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Migrations\\20260731054324_IslemLogEklendi.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Migrations\\20260731054324_IslemLogEklendi.Designer.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Migrations\\AppDbContextModelSnapshot.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Models\\DefterKaydi.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Models\\IslemLog.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Models\\Kullanici.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Program.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Services\\LogService.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Services\\OcrService.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Services\\PdfService.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Services\\TokenService.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\StajDefteri.Api.GlobalUsings.g.cs,\"C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs\",C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\StajDefteri.Api.AssemblyInfo.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\StajDefteri.Api.MvcApplicationPartsAssemblyInfo.cs,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\wwwroot\\yuklenenler\\07733947-927d-467e-b9af-1486a2389e8a.png,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\wwwroot\\yuklenenler\\268a25be-de48-4ef0-be7d-bb773a9de274.png,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\appsettings.Development.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\appsettings.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Loglar\\log-20260731.txt,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\StajDefteri.Api.http,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\stajdefteri.db,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\tessdata\\tur.traineddata,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\Properties\\launchSettings.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\project.assets.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\StajDefteri.Api.csproj.nuget.dgspec.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\appsettings.Development.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\appsettings.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\StajDefteri.Api.deps.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\StajDefteri.Api.runtimeconfig.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\StajDefteri.Api.staticwebassets.endpoints.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\bin\\Debug\\net9.0\\StajDefteri.Api.staticwebassets.runtime.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\rjimswa.dswa.cache.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\rjsmcshtml.dswa.cache.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\rjsmrazor.dswa.cache.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\rpswa.dswa.cache.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\StajDefteri.Api.sourcelink.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\staticwebassets.build.endpoints.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\staticwebassets.build.json,C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\obj\\Debug\\net9.0\\staticwebassets.development.json"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\.sonarqube\\out\\0"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\.sonarqube\\out\\0\\Issues.json"
+    },
+    {
+      "key": "709590D8-76B7-4A94-9ED4-EDBC25CA9582.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\batub\\staj-defteri\\backend\\StajDefteri.Api\\.sonarqube\\out\\0\\Telemetry.json"
+    },
+    {
+      "key": "sonar.login",
+      "value": "***"
+    },
+    {
+      "key": "sonar.host.url",
+      "value": "http://localhost:9000"
+    },
+    {
+      "key": "sonar.visualstudio.enable",
+      "value": "false"
+    }
+  ]
+}

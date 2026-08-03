@@ -251,3 +251,72 @@ input:focus {
 .geri-link:hover {
   color: var(--renk-ana);
 }
+.ogrenci-form {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  box-shadow: var(--golge);
+  padding: var(--bosluk-m);
+  margin-bottom: var(--bosluk-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-s);
+  align-items: flex-start;
+}
+
+.ogrenci-form h2 {
+  font-size: 16px;
+  margin-bottom: var(--bosluk-s);
+}
+
+.ogrenci-form input {
+  max-width: 320px;
+}
+
+.form-mesaj--basari { color: var(--renk-onaylandi); font-size: 14px; }
+.form-mesaj--hata   { color: var(--renk-reddedildi); font-size: 14px; }
+
+.entry-card__red-bilgi {
+  font-size: 13px;
+  background: #fef2f2;
+  border-left: 3px solid var(--renk-reddedildi);
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.entry-card__red-meta {
+  display: block;
+  margin-top: 4px;
+  color: var(--renk-soluk);
+  font-size: 12px;
+}
+
+.entry-card__red-input {
+  font: inherit;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: 6px;
+  resize: vertical;
+}
+.foto-yukle {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--renk-kart);
+  border: 1px dashed var(--renk-ana);
+  border-radius: 6px;
+  color: var(--renk-ana);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.foto-yukle:hover {
+  background: #eff6ff;
+}
+
+.foto-durum {
+  color: var(--renk-soluk);
+  font-size: 14px;
+  font-style: italic;
+}

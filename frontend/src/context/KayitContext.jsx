@@ -1,39 +1,55 @@
 import { createContext, useContext, useState } from "react";
-import { kayitlar as baslangicKayitlari } from "../services/entryService";
+import { apiIstek } from "../services/api";
 
 const KayitContext = createContext(null);
 
 export function KayitProvider({ children }) {
-  const [kayitlar, setKayitlar] = useState(baslangicKayitlari);
-
-  const kayitEkle = (icerik, ogrenciId) => {
-    const yeniKayit = {
-      id: Date.now(),
-      tarih: new Date().toISOString().split("T")[0],
-      icerik,
-      durum: "bekliyor",
-      ogrenciId,
-    };
-    setKayitlar([yeniKayit, ...kayitlar]);
+  const [kayitlar, setKayitlar] = useState([]);
+  const kayitlariYukle = async () => {
+    const cevap = await apiIstek("/kayitlar/benim");
+    if (cevap.ok) {
+      setKayitlar(await cevap.json());
+    }
   };
 
-  const kayitOnayla = (id) => {
-    setKayitlar(
-      kayitlar.map((k) => (k.id === id ? { ...k, durum: "onaylandi" } : k))
-    );
+  const kayitEkle = async (icerik) => {
+    const cevap = await apiIstek("/kayitlar", {
+      method: "POST",
+      body: JSON.stringify({ icerik }),   
+    });
+    if (cevap.ok) {
+      const yeni = await cevap.json();
+      setKayitlar([yeni, ...kayitlar]);
+    }
   };
-  const kayitReddet = (id) => {
-  setKayitlar(
-    kayitlar.map((k) => (k.id === id ? { ...k, durum: "reddedildi" } : k))
-  );
+
+  const kayitOnayla = async (id) => {
+    const cevap = await apiIstek(`/kayitlar/${id}/onayla`, { method: "PUT" });
+    if (cevap.ok) {
+      const guncel = await cevap.json();
+      setKayitlar(kayitlar.map((k) => (k.id === id ? guncel : k)));
+    }
+  };
+
+  const kayitReddet = async (id, aciklama) => {
+  const cevap = await apiIstek(`/kayitlar/${id}/reddet`, {
+    method: "PUT",
+    body: JSON.stringify({ aciklama }),
+  });
+  if (cevap.ok) {
+    const guncel = await cevap.json();
+    setKayitlar(kayitlar.map((k) => (k.id === id ? guncel : k)));
+  }
 };
-
   return (
-    <KayitContext.Provider value={{ kayitlar, kayitEkle, kayitOnayla, kayitReddet }}>
+    <KayitContext.Provider
+      value={{ kayitlar, kayitlariYukle, kayitEkle, kayitOnayla, kayitReddet }}
+    >
       {children}
     </KayitContext.Provider>
   );
 }
+
 
 export function useKayit() {
   return useContext(KayitContext);

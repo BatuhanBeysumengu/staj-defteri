@@ -1,11 +1,46 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using StajDefteri.Api.Data;
+using StajDefteri.Api.Services;
+using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Warning()                         
+    .MinimumLevel.Override("StajDefteri", Serilog.Events.LogEventLevel.Information) 
+    .WriteTo.File("Loglar/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog();   
+builder.Services.AddScoped<OcrService>();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(Options => Options.UseSqlite("Data source=stajdefteri.db"));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<PdfService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=stajdefteri.db"));
+
+builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<LogService>(); 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendIzni", policy =>
@@ -15,10 +50,20 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
 var app = builder.Build();
 
-app.UseCors("FrontendIzni");   
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-app.MapControllers();        
+app.UseCors("FrontendIzni");
 
-app.Run();                      
+app.UseAuthentication();  
+app.UseAuthorization();   
+app.UseStaticFiles();
+app.MapControllers();
+
+app.Run();

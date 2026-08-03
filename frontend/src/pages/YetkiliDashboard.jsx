@@ -1,44 +1,44 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import EntryCard from "../components/EntryCard";
+import Header from "../components/Header";
+import OgrenciEkleForm from "../components/OgrenciEkleForm";
 import { useAuth } from "../context/AuthContext";
 import { useKayit } from "../context/KayitContext";
-import { bagliOgrenciIdleri, kullaniciAdiGetir } from "../services/deneme";
 
 function YetkiliDashboard() {
-  const { kullanici, cikis } = useAuth();
-  const { kayitlar, kayitOnayla, kayitReddet } = useKayit();
-  const navigate = useNavigate();
+  const { kullanici } = useAuth();
+  const { kayitlar, kayitOnayla, kayitReddet, kayitlariYukle } = useKayit();
 
-  const handleCikis = () => {
-    cikis();
-    navigate("/login");
-  };
-  const ogrencilerim = bagliOgrenciIdleri(kullanici.id);
-  const gorunecekKayitlar = kayitlar.filter((k) =>
-    ogrencilerim.includes(k.ogrenciId)
-  );
+  useEffect(() => {
+    kayitlariYukle();
+  }, []);
 
   return (
     <div className="dashboard">
-      <div className="dashboard__ust">
-        <h1>Merhaba, {kullanici.ad}</h1>
-        <button onClick={handleCikis}>Çıkış</button>
-      </div>
+      <Header />
 
-      {gorunecekKayitlar.length === 0 ? (
+      <OgrenciEkleForm />
+
+      {kayitlar.length === 0 ? (
         <p className="bos-durum">Size bağlı öğrencilere ait kayıt bulunmuyor.</p>
       ) : (
-        gorunecekKayitlar.map((kayit) => (
+        kayitlar.map((kayit) => (
           <EntryCard
             key={kayit.id}
             tarih={kayit.tarih}
             icerik={kayit.icerik}
             durum={kayit.durum}
-            ogrenciAdi={kullaniciAdiGetir(kayit.ogrenciId)}  
+            redAciklamasi={kayit.redAciklamasi}
+            redTarihi={kayit.redTarihi}
+            reddedenAd={kullanici.ad}
             onOnayla={
               kayit.durum === "bekliyor" ? () => kayitOnayla(kayit.id) : undefined
             }
-            onReddet={kayit.durum === "bekliyor" ? () => kayitReddet(kayit.id) : undefined}
+            onReddet={
+              kayit.durum === "bekliyor"
+                ? (aciklama) => kayitReddet(kayit.id, aciklama)
+                : undefined
+            }
           />
         ))
       )}
