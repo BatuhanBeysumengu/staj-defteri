@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { KayitProvider } from "./context/KayitContext";
 import Home from "./pages/Home";
 import { TemaProvider } from "./context/TemaContext";
+import Kayit from "./pages/Kayit";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/ogrenci" element={<ProtectedRoute izinliRol="ogrenci"><OgrenciDashboard /> </ProtectedRoute>} />
               <Route path="/yetkili" element={<ProtectedRoute izinliRol="yetkili"><YetkiliDashboard /> </ProtectedRoute>} />
               <Route path="/profil/:id" element={<ProtectedRoute><Profil /></ProtectedRoute>} />
+              <Route path="/kayit" element={<Kayit />} />
             </Routes>
           </BrowserRouter>
         </KayitProvider>

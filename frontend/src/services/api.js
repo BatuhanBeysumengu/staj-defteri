@@ -56,6 +56,46 @@ export async function kullaniciAra(q, rol) {
   if (!cevap.ok) return [];
   return await cevap.json();
 }
+export async function kayitOl(ad, email, sifre, davetKodu) {
+  try {
+    const cevap = await fetch(`${API_URL}/auth/kayit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ad, email, sifre, davetKodu }),
+    });
+
+    if (!cevap.ok) {
+      const hata = await cevap.json();
+      return { basarili: false, mesaj: hata.mesaj || "Kayıt başarısız" };
+    }
+
+    return { basarili: true, veri: await cevap.json() };  
+  } catch {
+    return { basarili: false, mesaj: "Sunucuya ulaşılamadı" };
+  }
+}
+export async function pdfIndir(kayitIdler) {
+  const token = localStorage.getItem("token");
+  const cevap = await fetch(`${API_URL}/kayitlar/pdf`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ kayitIdler }),
+  });
+
+  if (!cevap.ok) return false;
+
+  const blob = await cevap.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "staj-defteri.pdf";
+  a.click();
+  window.URL.revokeObjectURL(url);
+  return true;
+}
 export async function ocrIstek(dosya) {
   const token = localStorage.getItem("token");
   const form = new FormData();

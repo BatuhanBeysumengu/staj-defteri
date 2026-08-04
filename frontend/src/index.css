@@ -678,3 +678,88 @@ textarea:focus {
   background: var(--renk-yuzey);
   color: var(--renk-ana);
 }
+
+.link-btn {
+  background: transparent;
+  color: var(--renk-ana);
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  text-decoration: underline;
+  width: auto;
+}
+
+.link-btn:hover {
+  background: transparent;
+  color: var(--renk-ana-koyu);
+}
+
+.alt-link {
+  font-size: 14px;
+  color: var(--renk-metin-ikincil);
+}
+
+.alt-link a {
+  color: var(--renk-ana);
+  text-decoration: none;
+}
+
+.alt-link a:hover {
+  text-decoration: underline;
+}
+.pdf-arac {
+  margin-bottom: var(--bosluk-l);
+}
+
+.pdf-arac__panel {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-m);
+}
+
+.pdf-arac__tarih {
+  display: flex;
+  gap: var(--bosluk-m);
+  flex-wrap: wrap;
+}
+
+.pdf-arac__tarih label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--renk-metin-ikincil);
+}
+
+.pdf-arac__tarih input {
+  color-scheme: dark;
+}
+
+.pdf-arac__butonlar {
+  display: flex;
+  gap: var(--bosluk-s);
+  flex-wrap: wrap;
+}
+
+.kayit-satir {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bosluk-s);
+}
+
+.kayit-satir__kart {
+  flex: 1;
+}
+
+.kayit-secim {
+  width: 20px;
+  height: 20px;
+  margin-top: var(--bosluk-m);
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--renk-ana);
+}

@@ -13,3 +13,4 @@ public record KayitCevabi(
     DateTime? RedTarihi,
     string? ReddedenAd
 );
+public record PdfIstegi(int[] KayitIdler);

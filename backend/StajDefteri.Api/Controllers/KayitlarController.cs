@@ -17,15 +17,16 @@ public class KayitlarController : ControllerBase
     private readonly LogService _logService;
     private readonly OcrService _ocrService;
     private readonly PdfService _pdfService;
-    public KayitlarController(AppDbContext db, LogService logService,OcrService ocrService,PdfService pdfService)
+
+    public KayitlarController(AppDbContext db, LogService logService, OcrService ocrService, PdfService pdfService)
     {
         _db = db;
         _logService = logService;
         _ocrService = ocrService;
         _pdfService = pdfService;
-
     }
-     [HttpGet("benim")]
+
+    [HttpGet("benim")]
     public async Task<IActionResult> BenimKayitlarim()
     {
         var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
@@ -134,39 +135,41 @@ public class KayitlarController : ControllerBase
         return Ok(kayit);
     }
     [HttpPost("ocr")]
-public async Task<IActionResult> FotograftanMetin(IFormFile dosya)
-{
-    if (dosya is null || dosya.Length == 0)
-        return BadRequest(new { mesaj = "Dosya seçilmedi" });
-
-    var klasor = Path.Combine("wwwroot", "yuklenenler");
-    Directory.CreateDirectory(klasor);  
-
-    var dosyaAdi = $"{Guid.NewGuid()}{Path.GetExtension(dosya.FileName)}";
-    var tamYol = Path.Combine(klasor, dosyaAdi);
-
-    using (var stream = new FileStream(tamYol, FileMode.Create))
+    public async Task<IActionResult> FotograftanMetin(IFormFile dosya)
     {
-        await dosya.CopyToAsync(stream);
+        if (dosya is null || dosya.Length == 0)
+            return BadRequest(new { mesaj = "Dosya seçilmedi" });
+
+        var klasor = Path.Combine("wwwroot", "yuklenenler");
+        Directory.CreateDirectory(klasor);
+
+        var dosyaAdi = $"{Guid.NewGuid()}{Path.GetExtension(dosya.FileName)}";
+        var tamYol = Path.Combine(klasor, dosyaAdi);
+
+        using (var stream = new FileStream(tamYol, FileMode.Create))
+        {
+            await dosya.CopyToAsync(stream);
+        }
+
+        var metin = _ocrService.MetinCikar(tamYol);
+
+        return Ok(new { metin, dosyaYolu = $"/yuklenenler/{dosyaAdi}" });
     }
+    [HttpPost("pdf")]
+    public async Task<IActionResult> Pdf(PdfIstegi istek)
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+        var kullaniciAd = User.FindFirst("ad")!.Value;
 
-    var metin = _ocrService.MetinCikar(tamYol);
+        var kayitlar = await _db.DefterKayitlari
+            .Where(k => k.OgrenciId == kullaniciId && istek.KayitIdler.Contains(k.Id))
+            .OrderByDescending(k => k.Tarih)
+            .ToListAsync();
 
-    return Ok(new { metin, dosyaYolu = $"/yuklenenler/{dosyaAdi}" });
-}
-[HttpGet("pdf")]
-public async Task<IActionResult> Pdf()
-{
-    var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
-    var kullaniciAd = User.FindFirst("ad")!.Value;
+        if (kayitlar.Count == 0)
+            return BadRequest(new { mesaj = "Seçili kayıt bulunamadı" });
 
-    var kayitlar = await _db.DefterKayitlari
-        .Where(k => k.OgrenciId == kullaniciId)
-        .OrderByDescending(k => k.Tarih)
-        .ToListAsync();
-
-    var pdfBytes = _pdfService.KayitlarPdf(kullaniciAd, kayitlar);
-
-    return File(pdfBytes, "application/pdf", "staj-defteri.pdf");
-}
+        var pdfBytes = _pdfService.KayitlarPdf(kullaniciAd, kayitlar);
+        return File(pdfBytes, "application/pdf", "staj-defteri.pdf");
+    }
 }

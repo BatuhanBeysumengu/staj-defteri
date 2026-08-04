@@ -11,3 +11,8 @@ public record ProfilCevabi(
   string Email,
   string Rol
 );
+public record KayitIstegi(
+  string Ad,
+  string Email,
+  string Sifre,
+  string? DavetKodu);
