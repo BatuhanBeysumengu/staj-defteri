@@ -69,4 +69,24 @@ public class KullanicilarController : ControllerBase
             kullanici.Rol
         ));
     }
+    [Authorize]
+    [HttpGet("ara")]
+    public async Task<IActionResult> Ara([FromQuery] string? q, [FromQuery] string? rol)
+    {
+        var sorgu = _db.Kullanicilar.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(q))
+            sorgu = sorgu.Where(k => k.Ad.ToLower().Contains(q.ToLower()));
+
+        if (!string.IsNullOrWhiteSpace(rol))
+            sorgu = sorgu.Where(k => k.Rol == rol);
+
+        var sonuclar = await sorgu
+            .OrderBy(k => k.Ad)
+            .Take(20)                        
+            .Select(k => new ProfilCevabi(k.Id, k.Ad, k.Email, k.Rol))
+            .ToListAsync();
+
+        return Ok(sonuclar);
+    }
 }

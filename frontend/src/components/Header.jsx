@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTema } from "../context/TemaContext";
+import AramaKutusu from "./AramaKutusu";
 
 function Header() {
   const { kullanici, cikis } = useAuth();
@@ -15,6 +16,9 @@ function Header() {
   return (
     <header className="ust-bar">
       <h1 className="ust-bar__baslik">Merhaba, {kullanici.ad}</h1>
+
+      <AramaKutusu />
+
       <nav className="ust-bar__menu">
         <button className="tema-btn" onClick={temaDegistir} title="Tema değiştir">
           {tema === "koyu" ? "☀️" : "🌙"}

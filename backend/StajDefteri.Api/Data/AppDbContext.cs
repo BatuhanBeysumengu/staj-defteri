@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
   public DbSet<Kullanici> Kullanicilar => Set<Kullanici>();
   public DbSet<DefterKaydi> DefterKayitlari => Set<DefterKaydi>();
   public DbSet<IslemLog> IslemLoglari => Set<IslemLog>();
+  public DbSet<BaglantiIstegi> BaglantiIstekleri => Set<BaglantiIstegi>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

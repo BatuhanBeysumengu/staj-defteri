@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import OgrenciEkleForm from "../components/OgrenciEkleForm";
 import { useAuth } from "../context/AuthContext";
 import { useKayit } from "../context/KayitContext";
+import GelenIstekler from "../components/GelenIstekler";
+
 
 function YetkiliDashboard() {
   const { kullanici } = useAuth();
@@ -16,7 +18,7 @@ function YetkiliDashboard() {
   return (
     <div className="dashboard">
       <Header />
-
+      <GelenIstekler />
       <OgrenciEkleForm />
 
       {kayitlar.length === 0 ? (
