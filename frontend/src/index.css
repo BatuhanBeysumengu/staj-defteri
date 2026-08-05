@@ -763,3 +763,83 @@ textarea:focus {
   cursor: pointer;
   accent-color: var(--renk-ana);
 }
+.profil-arkadas {
+  margin-top: var(--bosluk-m);
+  width: 100%;
+}
+
+.profil-arkadas button {
+  width: 100%;
+}
+
+.istek-kart__ad {
+  font-weight: 600;
+  color: var(--renk-metin);      
+  text-decoration: none;
+}
+
+.istek-kart__ad:hover {
+  color: var(--renk-ana);         
+  text-decoration: underline;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.arkadas-liste {
+  max-width: 600px;
+  margin: 0 auto var(--bosluk-l);
+}
+
+.arkadas-liste h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--bosluk-m);
+}
+
+.arkadas-liste__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--bosluk-s);
+}
+
+.arkadas-oge {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk-s);
+  padding: var(--bosluk-s) var(--bosluk-m);
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  text-decoration: none;
+  color: var(--renk-metin);
+  transition: border-color 0.15s;
+}
+
+.arkadas-oge:hover {
+  border-color: var(--renk-ana);
+}
+
+.arkadas-oge__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--renk-ana), var(--renk-ana-koyu));
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.arkadas-oge__ad {
+  flex: 1;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.arkadas-oge__rol {
+  font-size: 12px;
+  color: var(--renk-soluk);
+}

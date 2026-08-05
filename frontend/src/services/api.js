@@ -96,6 +96,42 @@ export async function pdfIndir(kayitIdler) {
   window.URL.revokeObjectURL(url);
   return true;
 }
+export async function arkadaslikGonder(aliciId) {
+  const cevap = await apiIstek(`/arkadaslik/gonder/${aliciId}`, { method: "POST" });
+  if (!cevap.ok) {
+    const hata = await cevap.json();
+    return { basarili: false, mesaj: hata.mesaj || "İstek gönderilemedi" };
+  }
+  return { basarili: true };
+}
+
+export async function arkadaslikDurum(digerId) {
+  const cevap = await apiIstek(`/arkadaslik/durum/${digerId}`);
+  if (!cevap.ok) return { durum: "yok" };
+  return await cevap.json();
+}
+
+export async function arkadaslikGelenler() {
+  const cevap = await apiIstek("/arkadaslik/gelenler");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function arkadaslikKabul(id) {
+  const cevap = await apiIstek(`/arkadaslik/${id}/kabul`, { method: "PUT" });
+  return cevap.ok;
+}
+
+export async function arkadaslikRet(id) {
+  const cevap = await apiIstek(`/arkadaslik/${id}/ret`, { method: "PUT" });
+  return cevap.ok;
+}
+
+export async function arkadasListem() {
+  const cevap = await apiIstek("/arkadaslik/listem");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
 export async function ocrIstek(dosya) {
   const token = localStorage.getItem("token");
   const form = new FormData();

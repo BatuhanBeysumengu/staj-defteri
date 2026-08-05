@@ -3,6 +3,7 @@ import EntryCard from "../components/EntryCard";
 import Header from "../components/Header";
 import { useKayit } from "../context/KayitContext";
 import { ocrIstek, pdfIndir } from "../services/api";
+import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
 
 function OgrenciDashboard() {
   const { kayitlar, kayitEkle, kayitlariYukle } = useKayit();
@@ -56,8 +57,7 @@ function OgrenciDashboard() {
   return (
     <div className="dashboard">
       <Header />
-
-      {/* PDF araç çubuğu */}
+      <ArkadaslikIstekleri />
       <div className="pdf-arac">
         {!secimModu ? (
           <button onClick={() => setSecimModu(true)}>📄 PDF İndir</button>

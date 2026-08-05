@@ -38,6 +38,7 @@ public class KullanicilarController : ControllerBase
         await _db.SaveChangesAsync();
         return Ok(new { yeniOgrenci.Id, yeniOgrenci.Ad, yeniOgrenci.Email });
     }
+
     [Authorize]
     [HttpGet("profil/benim")]
     public async Task<IActionResult> BenimProfilim()
@@ -69,21 +70,22 @@ public class KullanicilarController : ControllerBase
             kullanici.Rol
         ));
     }
+
     [Authorize]
     [HttpGet("ara")]
     public async Task<IActionResult> Ara([FromQuery] string? q, [FromQuery] string? rol)
     {
         var sorgu = _db.Kullanicilar.AsQueryable();
-
+        
         if (!string.IsNullOrWhiteSpace(q))
-            sorgu = sorgu.Where(k => k.Ad.ToLower().Contains(q.ToLower()));
+            sorgu = sorgu.Where(k => EF.Functions.Like(k.Ad, $"%{q}%"));
 
         if (!string.IsNullOrWhiteSpace(rol))
             sorgu = sorgu.Where(k => k.Rol == rol);
 
         var sonuclar = await sorgu
             .OrderBy(k => k.Ad)
-            .Take(20)                        
+            .Take(20)
             .Select(k => new ProfilCevabi(k.Id, k.Ad, k.Email, k.Rol))
             .ToListAsync();
 

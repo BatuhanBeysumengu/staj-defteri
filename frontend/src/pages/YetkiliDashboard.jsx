@@ -5,7 +5,7 @@ import OgrenciEkleForm from "../components/OgrenciEkleForm";
 import { useAuth } from "../context/AuthContext";
 import { useKayit } from "../context/KayitContext";
 import GelenIstekler from "../components/GelenIstekler";
-
+import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
 
 function YetkiliDashboard() {
   const { kullanici } = useAuth();
@@ -18,6 +18,7 @@ function YetkiliDashboard() {
   return (
     <div className="dashboard">
       <Header />
+      <ArkadaslikIstekleri />
       <GelenIstekler />
       <OgrenciEkleForm />
 
