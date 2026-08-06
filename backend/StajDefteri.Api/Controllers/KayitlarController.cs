@@ -53,6 +53,7 @@ public class KayitlarController : ControllerBase
                 .OrderByDescending(k => k.Tarih)
                 .ToListAsync();
         }
+
         var reddedenIdler = hamKayitlar
             .Where(k => k.ReddedenId != null)
             .Select(k => k.ReddedenId!.Value)
@@ -78,17 +79,51 @@ public class KayitlarController : ControllerBase
 
         return Ok(cevap);
     }
+
+    [HttpGet("kullanici/{kullaniciId}")]
+    public async Task<IActionResult> KullaniciKayitlari(int kullaniciId)
+    {
+        var bakanId = int.Parse(User.FindFirst("id")!.Value);
+
+        var kayitlar = await _db.DefterKayitlari
+            .Where(k => k.OgrenciId == kullaniciId)
+            .OrderByDescending(k => k.Tarih)
+            .ToListAsync();
+
+        bool arkadasMi = await _db.Arkadasliklar.AnyAsync(a =>
+            a.Durum == "kabul" &&
+            ((a.GonderenId == bakanId && a.AliciId == kullaniciId) ||
+             (a.GonderenId == kullaniciId && a.AliciId == bakanId)));
+
+        bool kendisiMi = bakanId == kullaniciId;
+
+        var gorunenler = kayitlar.Where(k =>
+            kendisiMi ||
+            k.Gorunurluk == "public" ||
+            (k.Gorunurluk == "friends" && arkadasMi)
+        ).ToList();
+
+        return Ok(gorunenler.Select(k => new
+        {
+            k.Id, k.Tarih, k.Icerik, k.Durum, k.Gorunurluk
+        }));
+    }
+
     [HttpPost]
     public async Task<IActionResult> Ekle(KayitEkleIstegi istek)
     {
         var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var gecerliler = new[] { "public", "friends", "private" };
+        var gorunurluk = gecerliler.Contains(istek.Gorunurluk) ? istek.Gorunurluk : "private";
 
         var yeniKayit = new DefterKaydi
         {
             Icerik = istek.Icerik,
             OgrenciId = kullaniciId,
             Tarih = DateOnly.FromDateTime(DateTime.Now),
-            Durum = "bekliyor"
+            Durum = "bekliyor",
+            Gorunurluk = gorunurluk
         };
 
         _db.DefterKayitlari.Add(yeniKayit);
@@ -113,6 +148,7 @@ public class KayitlarController : ControllerBase
 
         return Ok(kayit);
     }
+
     [HttpPut("{id}/reddet")]
     public async Task<IActionResult> Reddet(int id, RedIstegi istek)
     {
@@ -134,6 +170,28 @@ public class KayitlarController : ControllerBase
 
         return Ok(kayit);
     }
+
+    [HttpPut("{id}/gorunurluk")]
+    public async Task<IActionResult> GorunurlukGuncelle(int id, GorunurlukIstegi istek)
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var kayit = await _db.DefterKayitlari.FindAsync(id);
+        if (kayit is null) return NotFound();
+
+        if (kayit.OgrenciId != kullaniciId)
+            return Forbid();
+
+        var gecerliler = new[] { "public", "friends", "private" };
+        if (!gecerliler.Contains(istek.Gorunurluk))
+            return BadRequest(new { mesaj = "Geçersiz görünürlük" });
+
+        kayit.Gorunurluk = istek.Gorunurluk;
+        await _db.SaveChangesAsync();
+
+        return Ok(new { mesaj = "Görünürlük güncellendi" });
+    }
+
     [HttpPost("ocr")]
     public async Task<IActionResult> FotograftanMetin(IFormFile dosya)
     {
@@ -155,6 +213,7 @@ public class KayitlarController : ControllerBase
 
         return Ok(new { metin, dosyaYolu = $"/yuklenenler/{dosyaAdi}" });
     }
+
     [HttpPost("pdf")]
     public async Task<IActionResult> Pdf(PdfIstegi istek)
     {

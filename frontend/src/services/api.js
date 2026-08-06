@@ -1,4 +1,5 @@
 export const API_URL = "http://localhost:5106/api";
+
 export async function apiIstek(yol, secenekler = {}) {
   const token = localStorage.getItem("token");
 
@@ -18,35 +19,13 @@ export async function benimProfilim() {
   if (!cevap.ok) return null;
   return await cevap.json();
 }
+
 export async function profilGetir(id) {
   const cevap = await apiIstek(`/kullanicilar/profil/${id}`);
   if (!cevap.ok) return null;
   return await cevap.json();
 }
-export async function baglantiIstegiGonder(yetkiliId, mesaj) {
-  const cevap = await apiIstek("/baglanti/gonder", {
-    method: "POST",
-    body: JSON.stringify({ yetkiliId, mesaj }),
-  });
-  if (!cevap.ok) {
-    const hata = await cevap.json();
-    return { basarili: false, mesaj: hata.mesaj || "İstek gönderilemedi" };
-  }
-  return { basarili: true };
-}
-export async function gelenIstekler() {
-  const cevap = await apiIstek("/baglanti/gelenler");
-  if (!cevap.ok) return [];
-  return await cevap.json();
-}
-export async function istekKabul(id) {
-  const cevap = await apiIstek(`/baglanti/${id}/kabul`, { method: "PUT" });
-  return cevap.ok;
-}
-export async function istekRet(id) {
-  const cevap = await apiIstek(`/baglanti/${id}/ret`, { method: "PUT" });
-  return cevap.ok;
-}
+
 export async function kullaniciAra(q, rol) {
   const params = new URLSearchParams();
   if (q) params.append("q", q);
@@ -69,32 +48,37 @@ export async function kayitOl(ad, email, sifre, davetKodu) {
       return { basarili: false, mesaj: hata.mesaj || "Kayıt başarısız" };
     }
 
-    return { basarili: true, veri: await cevap.json() };  
+    return { basarili: true, veri: await cevap.json() };
   } catch {
     return { basarili: false, mesaj: "Sunucuya ulaşılamadı" };
   }
 }
-export async function pdfIndir(kayitIdler) {
-  const token = localStorage.getItem("token");
-  const cevap = await fetch(`${API_URL}/kayitlar/pdf`, {
+export async function baglantiIstegiGonder(yetkiliId, mesaj) {
+  const cevap = await apiIstek("/baglanti/gonder", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ kayitIdler }),
+    body: JSON.stringify({ yetkiliId, mesaj }),
   });
+  if (!cevap.ok) {
+    const hata = await cevap.json();
+    return { basarili: false, mesaj: hata.mesaj || "İstek gönderilemedi" };
+  }
+  return { basarili: true };
+}
 
-  if (!cevap.ok) return false;
+export async function gelenIstekler() {
+  const cevap = await apiIstek("/baglanti/gelenler");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
 
-  const blob = await cevap.blob();
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "staj-defteri.pdf";
-  a.click();
-  window.URL.revokeObjectURL(url);
-  return true;
+export async function istekKabul(id) {
+  const cevap = await apiIstek(`/baglanti/${id}/kabul`, { method: "PUT" });
+  return cevap.ok;
+}
+
+export async function istekRet(id) {
+  const cevap = await apiIstek(`/baglanti/${id}/ret`, { method: "PUT" });
+  return cevap.ok;
 }
 export async function arkadaslikGonder(aliciId) {
   const cevap = await apiIstek(`/arkadaslik/gonder/${aliciId}`, { method: "POST" });
@@ -132,6 +116,49 @@ export async function arkadasListem() {
   if (!cevap.ok) return [];
   return await cevap.json();
 }
+
+export async function arkadasListesi(kullaniciId) {
+  const cevap = await apiIstek(`/arkadaslik/listesi/${kullaniciId}`);
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+export async function kullaniciKayitlari(kullaniciId) {
+  const cevap = await apiIstek(`/kayitlar/kullanici/${kullaniciId}`);
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function gorunurlukGuncelle(kayitId, gorunurluk) {
+  const cevap = await apiIstek(`/kayitlar/${kayitId}/gorunurluk`, {
+    method: "PUT",
+    body: JSON.stringify({ gorunurluk }),
+  });
+  return cevap.ok;
+}
+
+export async function pdfIndir(kayitIdler) {
+  const token = localStorage.getItem("token");
+  const cevap = await fetch(`${API_URL}/kayitlar/pdf`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ kayitIdler }),
+  });
+
+  if (!cevap.ok) return false;
+
+  const blob = await cevap.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "staj-defteri.pdf";
+  a.click();
+  window.URL.revokeObjectURL(url);
+  return true;
+}
+
 export async function ocrIstek(dosya) {
   const token = localStorage.getItem("token");
   const form = new FormData();
@@ -146,5 +173,36 @@ export async function ocrIstek(dosya) {
   });
 
   if (!cevap.ok) return null;
-  return await cevap.json(); 
+  return await cevap.json();
+}
+
+export async function begeniToggle(kayitId) {
+  const cevap = await apiIstek(`/begeni/${kayitId}`, { method: "POST" });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+
+export async function begeniDurum(kayitId) {
+  const cevap = await apiIstek(`/begeni/${kayitId}`);
+  if (!cevap.ok) return { sayi: 0, benBegendim: false };
+  return await cevap.json();
+}
+
+export async function yorumlariGetir(kayitId) {
+  const cevap = await apiIstek(`/yorum/${kayitId}`);
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function yorumEkle(kayitId, icerik) {
+  const cevap = await apiIstek(`/yorum/${kayitId}`, {
+    method: "POST",
+    body: JSON.stringify({ icerik }),
+  });
+  return cevap.ok;
+}
+
+export async function yorumSil(yorumId) {
+  const cevap = await apiIstek(`/yorum/${yorumId}`, { method: "DELETE" });
+  return cevap.ok;
 }

@@ -14,6 +14,7 @@ function OgrenciDashboard() {
   const [secililer, setSecililer] = useState([]);  
   const [baslangic, setBaslangic] = useState("");    
   const [bitis, setBitis] = useState("");
+  const [gorunurluk, setGorunurluk] = useState("private");
 
   useEffect(() => {
     kayitlariYukle();
@@ -21,8 +22,9 @@ function OgrenciDashboard() {
 
   const handleEkle = () => {
     if (!yeniIcerik.trim()) return;
-    kayitEkle(yeniIcerik);
+    kayitEkle(yeniIcerik, gorunurluk); 
     setYeniIcerik("");
+    setGorunurluk("private");
   };
 
   const handleFotograf = async (e) => {
@@ -99,9 +101,18 @@ function OgrenciDashboard() {
           onChange={(e) => setYeniIcerik(e.target.value)}
           rows={4}
         />
+        <div className="kayit-form__alt">
+    <label className="gorunurluk-secici">
+      Görünürlük:
+      <select value={gorunurluk} onChange={(e) => setGorunurluk(e.target.value)}>
+        <option value="private">🔒 Sadece ben</option>
+        <option value="friends">👥 Arkadaşlarım</option>
+        <option value="public">🌍 Herkes</option>
+      </select>
+    </label>
         <button onClick={handleEkle}>Kaydet</button>
       </div>
-
+    </div>
       {filtreliKayitlar.length === 0 ? (
         <p className="bos-durum">Kayıt bulunmuyor.</p>
       ) : (

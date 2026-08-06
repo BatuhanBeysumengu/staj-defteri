@@ -91,4 +91,4 @@ public class KullanicilarController : ControllerBase
 
         return Ok(sonuclar);
     }
-}
+} 

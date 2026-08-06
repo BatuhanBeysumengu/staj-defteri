@@ -12,12 +12,13 @@ export function KayitProvider({ children }) {
     }
   };
 
-  const kayitEkle = async (icerik) => {
+  const kayitEkle = async (icerik,gorunurluk) => {
     const cevap = await apiIstek("/kayitlar", {
       method: "POST",
-      body: JSON.stringify({ icerik }),   
+      body: JSON.stringify({ icerik,gorunurluk }),   
     });
     if (cevap.ok) {
+      kayitlariYukle();
       const yeni = await cevap.json();
       setKayitlar([yeni, ...kayitlar]);
     }

@@ -125,6 +125,25 @@ public class ArkadaslikController : ControllerBase
 
         return Ok(arkadaslar);
     }
+[HttpGet("listesi/{kullaniciId}")]
+public async Task<IActionResult> Listesi(int kullaniciId)
+{
+    var arkadasliklar = await _db.Arkadasliklar
+        .Where(a => a.Durum == "kabul" &&
+                    (a.GonderenId == kullaniciId || a.AliciId == kullaniciId))
+        .ToListAsync();
+
+    var arkadasIdler = arkadasliklar
+        .Select(a => a.GonderenId == kullaniciId ? a.AliciId : a.GonderenId)
+        .ToList();
+
+    var arkadaslar = await _db.Kullanicilar
+        .Where(k => arkadasIdler.Contains(k.Id))
+        .Select(k => new ArkadasCevabi(k.Id, k.Ad, k.Rol))
+        .ToListAsync();
+
+    return Ok(arkadaslar);
+}
     [HttpGet("durum/{digerId}")]
     public async Task<IActionResult> Durum(int digerId)
     {

@@ -1,7 +1,7 @@
 
 namespace StajDefteri.Api.Dtos;
 
-public record KayitEkleIstegi(string Icerik);
+public record KayitEkleIstegi(string Icerik,string Gorunurluk);
 public record RedIstegi(string Aciklama);
 public record KayitCevabi(
     int Id,
@@ -14,3 +14,4 @@ public record KayitCevabi(
     string? ReddedenAd
 );
 public record PdfIstegi(int[] KayitIdler);
+public record GorunurlukIstegi(string Gorunurluk);

@@ -843,3 +843,322 @@ button:disabled {
   font-size: 12px;
   color: var(--renk-soluk);
 }
+.kayit-form__alt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: var(--bosluk-m);
+  flex-wrap: wrap;
+}
+
+.gorunurluk-secici {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk-s);
+  font-size: 14px;
+  color: var(--renk-metin-ikincil);
+}
+
+.gorunurluk-secici select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  background: var(--renk-yuzey);
+  color: var(--renk-metin);
+  cursor: pointer;
+}
+
+.profil-kayitlar {
+  max-width: 600px;
+  margin: var(--bosluk-l) auto;
+}
+
+.profil-kayitlar h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--bosluk-m);
+}
+
+.profil-kayit-satir {
+  position: relative;
+}
+
+.gorunurluk-rozet {
+  position: absolute;
+  top: var(--bosluk-m);
+  right: var(--bosluk-m);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--renk-yuzey);
+  color: var(--renk-metin-ikincil);
+  border: 1px solid var(--renk-cizgi);
+}
+.gorunurluk-select-mini {
+  position: absolute;
+  top: var(--bosluk-m);
+  right: var(--bosluk-m);
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  background: var(--renk-yuzey);
+  color: var(--renk-metin);
+  cursor: pointer;
+}
+.profil-ust {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk-l);
+  max-width: 600px;
+  margin: 0 auto var(--bosluk-l);
+  padding: var(--bosluk-l);
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  box-shadow: var(--golge);
+}
+
+.profil-avatar--buyuk {
+  width: 100px;
+  height: 100px;
+  font-size: 44px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.profil-ust__bilgi {
+  flex: 1;
+}
+
+.profil-ust__bilgi h1 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.profil-ust__aksiyon {
+  margin-top: var(--bosluk-m);
+  display: flex;
+  gap: var(--bosluk-s);
+  flex-wrap: wrap;
+}
+
+.profil-istek {
+  max-width: 600px;
+  margin: 0 auto var(--bosluk-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-s);
+}
+.kayit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--bosluk-s);
+}
+
+.kayit-kare {
+  aspect-ratio: 1;
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, transform 0.1s;
+  overflow: hidden;
+}
+
+.kayit-kare:hover {
+  border-color: var(--renk-ana);
+  transform: translateY(-2px);
+  background: var(--renk-kart);
+}
+
+.kayit-kare__ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kayit-kare__tarih {
+  font-size: 11px;
+  color: var(--renk-soluk);
+}
+
+.kayit-kare__ikon {
+  font-size: 13px;
+}
+
+.kayit-kare__onizleme {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--renk-metin);
+  margin: 8px 0;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.kayit-kare__durum {
+  font-size: 11px;
+  font-weight: 500;
+}
+.kayit-kare__durum--onaylandi { color: var(--renk-onaylandi); }
+.kayit-kare__durum--reddedildi { color: var(--renk-reddedildi); }
+.kayit-kare__durum--bekliyor { color: var(--renk-bekliyor); }
+
+.kayit-detay__kart {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-l);
+  margin-top: var(--bosluk-m);
+}
+
+.kayit-detay__ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--bosluk-m);
+}
+
+.kayit-detay__tarih {
+  font-size: 14px;
+  color: var(--renk-soluk);
+}
+
+.kayit-detay__icerik {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: var(--bosluk-m);
+}
+@media (max-width: 500px) {
+  .kayit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.profil-sayac {
+  display: flex;
+  gap: var(--bosluk-l);
+  margin: var(--bosluk-s) 0;
+  font-size: 14px;
+  color: var(--renk-metin-ikincil);
+}
+
+.profil-sayac strong {
+  color: var(--renk-metin);
+  font-weight: 600;
+}
+.begeni-satir {
+  margin-top: var(--bosluk-m);
+  padding-top: var(--bosluk-m);
+  border-top: 1px solid var(--renk-cizgi);
+}
+
+.begeni-btn {
+  background: transparent;
+  border: 1px solid var(--renk-cizgi-vurgu);
+  color: var(--renk-metin);
+  font-size: 15px;
+  padding: 6px 14px;
+}
+
+.begeni-btn--aktif {
+  border-color: var(--renk-reddedildi);
+}
+
+.gorunurluk-select-detay {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  background: var(--renk-yuzey);
+  color: var(--renk-metin);
+  cursor: pointer;
+  margin-top: var(--bosluk-s);
+}
+
+.yorum-bolum {
+  max-width: 600px;
+  margin: var(--bosluk-l) auto 0;
+}
+
+.yorum-bolum h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: var(--bosluk-m);
+}
+
+.yorum-ekle {
+  display: flex;
+  gap: var(--bosluk-s);
+  margin-bottom: var(--bosluk-m);
+}
+
+.yorum-ekle input {
+  flex: 1;
+}
+
+.yorum-ekle button {
+  flex-shrink: 0;
+}
+
+.yorum-oge {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  padding: var(--bosluk-m);
+  margin-bottom: var(--bosluk-s);
+  position: relative;
+}
+
+.yorum-oge__ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.yorum-oge__ad {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--renk-ana);
+}
+
+.yorum-oge__tarih {
+  font-size: 12px;
+  color: var(--renk-soluk);
+}
+
+.yorum-oge__icerik {
+  font-size: 14px;
+  color: var(--renk-metin);
+}
+
+.yorum-sil {
+  background: transparent;
+  color: var(--renk-reddedildi);
+  border: none;
+  font-size: 12px;
+  padding: 4px 0 0;
+  width: auto;
+}
+
+.yorum-sil:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+
+.yorum-bos {
+  color: var(--renk-soluk);
+  font-size: 14px;
+  text-align: center;
+  padding: var(--bosluk-m);
+}

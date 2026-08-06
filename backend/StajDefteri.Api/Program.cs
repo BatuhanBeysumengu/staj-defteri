@@ -7,10 +7,11 @@ using StajDefteri.Api.Services;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Warning()                         
-    .MinimumLevel.Override("StajDefteri", Serilog.Events.LogEventLevel.Information) 
+    .MinimumLevel.Warning()
+    .MinimumLevel.Override("StajDefteri", Serilog.Events.LogEventLevel.Information)
+    .WriteTo.Console()
     .WriteTo.File("Loglar/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
+    .CreateLogger();;
 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 var builder = WebApplication.CreateBuilder(args);
 

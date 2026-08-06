@@ -11,6 +11,8 @@ public class AppDbContext : DbContext
   public DbSet<IslemLog> IslemLoglari => Set<IslemLog>();
   public DbSet<BaglantiIstegi> BaglantiIstekleri => Set<BaglantiIstegi>();
   public DbSet<Arkadaslik> Arkadasliklar => Set<Arkadaslik>();
+  public DbSet<Begeni> Begeniler => Set<Begeni>();
+  public DbSet<Yorum> Yorumlar => Set<Yorum>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

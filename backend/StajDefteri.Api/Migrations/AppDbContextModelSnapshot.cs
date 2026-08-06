@@ -69,6 +69,26 @@ namespace StajDefteri.Api.Migrations
                     b.ToTable("BaglantiIstekleri");
                 });
 
+            modelBuilder.Entity("StajDefteri.Api.Models.Begeni", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("KayitId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("KullaniciId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Begeniler");
+                });
+
             modelBuilder.Entity("StajDefteri.Api.Models.DefterKaydi", b =>
                 {
                     b.Property<int>("Id")
@@ -76,6 +96,10 @@ namespace StajDefteri.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Durum")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Gorunurluk")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -107,6 +131,7 @@ namespace StajDefteri.Api.Migrations
                         {
                             Id = 1,
                             Durum = "bekliyor",
+                            Gorunurluk = "private",
                             Icerik = "Proje kurulumu yapildi",
                             OgrenciId = 1,
                             Tarih = new DateOnly(2026, 7, 20)
@@ -115,6 +140,7 @@ namespace StajDefteri.Api.Migrations
                         {
                             Id = 2,
                             Durum = "onaylandi",
+                            Gorunurluk = "private",
                             Icerik = "Login ekrani tamamlandi",
                             OgrenciId = 1,
                             Tarih = new DateOnly(2026, 7, 21)
@@ -123,6 +149,7 @@ namespace StajDefteri.Api.Migrations
                         {
                             Id = 3,
                             Durum = "bekliyor",
+                            Gorunurluk = "private",
                             Icerik = "Veritabani semasi cizildi",
                             OgrenciId = 2,
                             Tarih = new DateOnly(2026, 7, 22)
@@ -222,6 +249,30 @@ namespace StajDefteri.Api.Migrations
                             Rol = "yetkili",
                             SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         });
+                });
+
+            modelBuilder.Entity("StajDefteri.Api.Models.Yorum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("KayitId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("KullaniciId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Yorumlar");
                 });
 #pragma warning restore 612, 618
         }
