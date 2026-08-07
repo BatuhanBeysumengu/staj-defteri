@@ -138,6 +138,7 @@ function Profil() {
           <div className="profil-ust__aksiyon">
             {!kendiProfilim && arkDurum && (
               <>
+               <button onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}> Mesaj Gönder</button>
                 {arkDurum.durum === "yok" && (
                   <button onClick={handleArkadasEkle}>Arkadaş Ekle</button>
                 )}

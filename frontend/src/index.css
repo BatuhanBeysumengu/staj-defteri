@@ -585,8 +585,9 @@ textarea:focus {
 }
 .arama {
   position: relative;
-  flex: 1;
-  max-width: 360px;
+  flex: 1 1 200px;
+  min-width: 180px;
+  max-width: 320px;
 }
 
 .arama__giris {
@@ -1161,4 +1162,213 @@ button:disabled {
   font-size: 14px;
   text-align: center;
   padding: var(--bosluk-m);
+}
+.mesajlar {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--bosluk-m);
+  height: 70vh;
+}
+
+.mesajlar__liste {
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+  overflow-y: auto;
+}
+
+.mesajlar__liste h2 {
+  font-size: 16px;
+  margin-bottom: var(--bosluk-m);
+}
+
+.konusma-oge {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk-s);
+  width: 100%;
+  padding: var(--bosluk-s);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  text-align: left;
+  color: var(--renk-metin);
+}
+
+.konusma-oge:hover,
+.konusma-oge--aktif {
+  background: var(--renk-yuzey);
+}
+
+.konusma-oge__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--renk-ana), var(--renk-ana-koyu));
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.konusma-oge__bilgi {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.konusma-oge__ad {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.konusma-oge__son {
+  font-size: 12px;
+  color: var(--renk-soluk);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mesajlar__konusma {
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.konusma {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.konusma__baslik {
+  padding: var(--bosluk-m);
+  border-bottom: 1px solid var(--renk-cizgi);
+  font-weight: 600;
+}
+
+.konusma__akis {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--bosluk-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-s);
+}
+
+.mesaj-balon {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+.mesaj-balon--ben {
+  align-self: flex-end;
+  background: var(--renk-ana);
+  color: white;
+}
+
+.mesaj-balon--karsi {
+  align-self: flex-start;
+  background: var(--renk-yuzey);
+}
+
+.mesaj-balon__saat {
+  display: block;
+  font-size: 10px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.mesaj-kayit {
+  border-left: 3px solid currentColor;
+  padding-left: 8px;
+}
+
+.mesaj-kayit__etiket {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.mesaj-kayit__onizleme {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.konusma__giris {
+  display: flex;
+  gap: var(--bosluk-s);
+  padding: var(--bosluk-m);
+  border-top: 1px solid var(--renk-cizgi);
+}
+
+.konusma__giris input {
+  flex: 1;
+}
+
+.konusma__bos,
+.konusma__giris + .konusma__bos {
+  color: var(--renk-soluk);
+  text-align: center;
+  margin: auto;
+}
+.mesajlar__altbaslik {
+  font-size: 12px;
+  color: var(--renk-soluk);
+  text-transform: uppercase;
+  margin: var(--bosluk-m) 0 var(--bosluk-s);
+  padding-left: var(--bosluk-s);
+}
+.kayit-detay__aksiyon {
+  display: flex;
+  gap: var(--bosluk-s);
+  margin-top: var(--bosluk-m);
+  padding-top: var(--bosluk-m);
+  border-top: 1px solid var(--renk-cizgi);
+  flex-wrap: wrap;
+}
+
+.paylas-liste {
+  margin-top: var(--bosluk-m);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.paylas-oge {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk-s);
+  padding: var(--bosluk-s);
+  background: var(--renk-yuzey);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  color: var(--renk-metin);
+  text-align: left;
+}
+
+.paylas-oge:hover {
+  border-color: var(--renk-ana);
+}
+
+.paylas-oge__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--renk-ana), var(--renk-ana-koyu));
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }

@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
   public DbSet<Arkadaslik> Arkadasliklar => Set<Arkadaslik>();
   public DbSet<Begeni> Begeniler => Set<Begeni>();
   public DbSet<Yorum> Yorumlar => Set<Yorum>();
+  public DbSet<Mesaj> Mesajlar => Set<Mesaj>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

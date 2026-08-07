@@ -206,3 +206,26 @@ export async function yorumSil(yorumId) {
   const cevap = await apiIstek(`/yorum/${yorumId}`, { method: "DELETE" });
   return cevap.ok;
 }
+export async function mesajGonder(aliciId, icerik, paylasilanKayitId) {
+  const cevap = await apiIstek("/mesaj/gonder", {
+    method: "POST",
+    body: JSON.stringify({ aliciId, icerik, paylasilanKayitId }),
+  });
+  if (!cevap.ok) {
+    const hata = await cevap.json();
+    return { basarili: false, mesaj: hata.mesaj || "Gönderilemedi" };
+  }
+  return { basarili: true };
+}
+
+export async function konusmaGetir(digerId) {
+  const cevap = await apiIstek(`/mesaj/konusma/${digerId}`);
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function mesajKutusu() {
+  const cevap = await apiIstek("/mesaj/kutu");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}

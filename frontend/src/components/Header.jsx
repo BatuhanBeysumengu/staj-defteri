@@ -23,6 +23,7 @@ function Header() {
         <button className="tema-btn" onClick={temaDegistir} title="Tema değiştir">
           {tema === "koyu" ? "☀️" : "🌙"}
         </button>
+        <Link to="/mesajlar" className="ust-bar__link">Mesajlar</Link> 
         <Link to={`/profil/${kullanici.id}`} className="ust-bar__link">Profilim</Link>
         <button className="ust-bar__cikis" onClick={handleCikis}>Çıkış</button>
       </nav>

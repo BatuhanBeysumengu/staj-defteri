@@ -5,6 +5,8 @@ import {
   yorumlariGetir,
   yorumEkle,
   yorumSil,
+  arkadasListem,
+  mesajGonder,
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
@@ -15,12 +17,18 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
   const [yorumlar, setYorumlar] = useState([]);
   const [yeniYorum, setYeniYorum] = useState("");
 
+  const [paylasModu, setPaylasModu] = useState(false);
+  const [arkadaslar, setArkadaslar] = useState([]);
+  const [paylasSonuc, setPaylasSonuc] = useState("");
+
   useEffect(() => {
     const yukle = async () => {
       setBegeni(await begeniDurum(kayit.id));
       setYorumlar(await yorumlariGetir(kayit.id));
     };
     yukle();
+    setPaylasModu(false);
+    setPaylasSonuc("");
   }, [kayit.id]);
 
   const handleBegeni = async () => {
@@ -44,6 +52,21 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
   const handleYorumSil = async (yorumId) => {
     if (await yorumSil(yorumId)) {
       setYorumlar((onceki) => onceki.filter((y) => y.id !== yorumId));
+    }
+  };
+
+  const handlePaylasAc = async () => {
+    setPaylasModu(true);
+    setArkadaslar(await arkadasListem());
+  };
+
+  const handleKaydiGonder = async (arkadasId) => {
+    const sonuc = await mesajGonder(arkadasId, null, kayit.id);
+    if (sonuc.basarili) {
+      setPaylasSonuc("Kayıt gönderildi");
+      setPaylasModu(false);
+    } else {
+      setPaylasSonuc(sonuc.mesaj);
     }
   };
 
@@ -73,14 +96,39 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
           </select>
         )}
 
-        <div className="begeni-satir">
+        <div className="kayit-detay__aksiyon">
           <button
             className={`begeni-btn ${begeni.benBegendim ? "begeni-btn--aktif" : ""}`}
             onClick={handleBegeni}
           >
             {begeni.benBegendim ? "❤️" : "🤍"} {begeni.sayi}
           </button>
+
+          <button className="btn--ikincil" onClick={handlePaylasAc}>
+            📤 Arkadaşa Gönder
+          </button>
         </div>
+
+        {paylasSonuc && <p className="form-mesaj--basari">{paylasSonuc}</p>}
+
+        {paylasModu && (
+          <div className="paylas-liste">
+            {arkadaslar.length === 0 ? (
+              <p className="yorum-bos">Gönderecek arkadaşınız yok.</p>
+            ) : (
+              arkadaslar.map((a) => (
+                <button
+                  key={a.id}
+                  className="paylas-oge"
+                  onClick={() => handleKaydiGonder(a.id)}
+                >
+                  <span className="paylas-oge__avatar">{a.ad.charAt(0).toUpperCase()}</span>
+                  {a.ad}
+                </button>
+              ))
+            )}
+          </div>
+        )}
       </div>
 
       <div className="yorum-bolum">

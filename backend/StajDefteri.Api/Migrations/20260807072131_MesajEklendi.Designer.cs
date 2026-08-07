@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StajDefteri.Api.Data;
 
@@ -10,9 +11,11 @@ using StajDefteri.Api.Data;
 namespace StajDefteri.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260807072131_MesajEklendi")]
+    partial class MesajEklendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.18");
@@ -249,32 +252,6 @@ namespace StajDefteri.Api.Migrations
                             Rol = "yetkili",
                             SifreHash = "$2a$11$bLvP3vhYl5kBk.kceeRUcup80fR1s022je218yJpE11uxNv.JXjDa"
                         });
-                });
-
-            modelBuilder.Entity("StajDefteri.Api.Models.Mesaj", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AliciId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GonderenId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Icerik")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("PaylasilanKayitId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Mesajlar");
                 });
 
             modelBuilder.Entity("StajDefteri.Api.Models.Yorum", b =>

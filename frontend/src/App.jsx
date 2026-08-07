@@ -9,6 +9,7 @@ import { KayitProvider } from "./context/KayitContext";
 import Home from "./pages/Home";
 import { TemaProvider } from "./context/TemaContext";
 import Kayit from "./pages/Kayit";
+import Mesajlar from "./pages/Mesajlar";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/yetkili" element={<ProtectedRoute izinliRol="yetkili"><YetkiliDashboard /> </ProtectedRoute>} />
               <Route path="/profil/:id" element={<ProtectedRoute><Profil /></ProtectedRoute>} />
               <Route path="/kayit" element={<Kayit />} />
+              <Route path="/mesajlar" element={<ProtectedRoute><Mesajlar /></ProtectedRoute>} />
             </Routes>
           </BrowserRouter>
         </KayitProvider>
