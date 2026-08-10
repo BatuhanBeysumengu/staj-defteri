@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StajDefteri.Api.Data;
 
@@ -10,9 +11,11 @@ using StajDefteri.Api.Data;
 namespace StajDefteri.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260810091338_OdevOnay")]
+    partial class OdevOnay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.18");
@@ -299,9 +302,6 @@ namespace StajDefteri.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("OlusturmaTarihi")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RedAciklamasi")
                         .HasColumnType("TEXT");
 
                     b.Property<DateOnly>("SonTeslimTarihi")

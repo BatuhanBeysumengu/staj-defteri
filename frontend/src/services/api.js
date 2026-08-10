@@ -229,3 +229,73 @@ export async function mesajKutusu() {
   if (!cevap.ok) return [];
   return await cevap.json();
 }
+export async function odevVer(baslik, aciklama, sonTeslimTarihi, ogrenciId) {
+  const cevap = await apiIstek("/odev/ver", {
+    method: "POST",
+    body: JSON.stringify({ baslik, aciklama, sonTeslimTarihi, ogrenciId }),
+  });
+  if (!cevap.ok) {
+    const hata = await cevap.json();
+    return { basarili: false, mesaj: hata.mesaj || "Ödev verilemedi" };
+  }
+  return { basarili: true };
+}
+
+export async function odevlerim() {
+  const cevap = await apiIstek("/odev/benim");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function odevTamamla(odevId) {
+  const cevap = await apiIstek(`/odev/${odevId}/tamamla`, { method: "PUT" });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+export async function ogrencilerim() {
+  const cevap = await apiIstek("/kullanicilar/ogrencilerim");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+export async function odevTeslim(odevId, teslimNotu) {
+  const cevap = await apiIstek(`/odev/${odevId}/teslim`, {
+    method: "PUT",
+    body: JSON.stringify({ teslimNotu }),
+  });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+
+export async function odevGeriAl(odevId) {
+  const cevap = await apiIstek(`/odev/${odevId}/geri-al`, { method: "PUT" });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+
+export async function odevDosyaYukle(odevId, dosya) {
+  const token = localStorage.getItem("token");
+  const form = new FormData();
+  form.append("dosya", dosya);
+
+  const cevap = await fetch(`${API_URL}/odev/${odevId}/dosya`, {
+    method: "POST",
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: form,
+  });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+export async function odevOnayla(odevId) {
+  const cevap = await apiIstek(`/odev/${odevId}/onayla`, { method: "PUT" });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
+
+export async function odevReddet(odevId, aciklama) {
+  const cevap = await apiIstek(`/odev/${odevId}/reddet`, {
+    method: "PUT",
+    body: JSON.stringify({ aciklama }),
+  });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}

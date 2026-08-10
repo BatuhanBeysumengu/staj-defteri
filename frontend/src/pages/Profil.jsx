@@ -9,7 +9,8 @@ import {
   arkadaslikKabul,
   kullaniciKayitlari,
   gorunurlukGuncelle,
-  arkadasListesi
+  arkadasListesi,
+  odevVer
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import KayitDetay from "../components/KayitDetay";
@@ -27,6 +28,11 @@ function Profil() {
   const [arkadaslar, setArkadaslar] = useState([]);
   const [kayitlar, setKayitlar] = useState([]);
   const [seciliKayit, setSeciliKayit] = useState(null);
+  const [odevModu, setOdevModu] = useState(false);
+  const [odevBaslik, setOdevBaslik] = useState("");
+  const [odevAciklama, setOdevAciklama] = useState("");
+  const [odevTarih, setOdevTarih] = useState("");
+  const [odevSonuc, setOdevSonuc] = useState(null);
 
   useEffect(() => {
     const yukle = async () => {
@@ -104,6 +110,22 @@ function Profil() {
   if (!profil) {
     return <div className="dashboard"><Header /><p className="bos-durum">Kullanıcı bulunamadı.</p></div>;
   }
+  const handleOdevVer = async () => {
+  if (!odevBaslik.trim() || !odevTarih) {
+    setOdevSonuc({ tur: "hata", metin: "Başlık ve teslim tarihi gerekli" });
+    return;
+  }
+  const sonuc = await odevVer(odevBaslik, odevAciklama, odevTarih, profil.id);
+  if (sonuc.basarili) {
+    setOdevSonuc({ tur: "basari", metin: "Ödev verildi" });
+    setOdevBaslik("");
+    setOdevAciklama("");
+    setOdevTarih("");
+    setOdevModu(false);
+  } else {
+    setOdevSonuc({ tur: "hata", metin: sonuc.mesaj });
+  }
+};
 
   const kendiProfilim = kullanici.id === profil.id;
   const baglanmaGonderilebilir =
@@ -138,6 +160,9 @@ function Profil() {
           <div className="profil-ust__aksiyon">
             {!kendiProfilim && arkDurum && (
               <>
+              {kullanici.rol === "yetkili" && profil.rol === "ogrenci" && (
+                <button onClick={() => setOdevModu(true)}>Ödev Ver</button>
+)}
                <button onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}> Mesaj Gönder</button>
                 {arkDurum.durum === "yok" && (
                   <button onClick={handleArkadasEkle}>Arkadaş Ekle</button>
@@ -176,10 +201,42 @@ function Profil() {
       )}
 
       {sonuc && (
+        
         <p className={sonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>
           {sonuc.metin}
         </p>
       )}
+          {odevModu && (
+      <div className="odev-form">
+        <h3>Ödev Ver</h3>
+        <input
+          type="text"
+          placeholder="Ödev başlığı"
+          value={odevBaslik}
+          onChange={(e) => setOdevBaslik(e.target.value)}
+        />
+        <textarea
+          placeholder="Açıklama (isteğe bağlı)"
+          value={odevAciklama}
+          onChange={(e) => setOdevAciklama(e.target.value)}
+          rows={3}
+        />
+        <label className="odev-form__tarih">
+          Son teslim tarihi:
+          <input type="date" value={odevTarih} onChange={(e) => setOdevTarih(e.target.value)} />
+        </label>
+        <div className="odev-form__aksiyon">
+          <button onClick={handleOdevVer}>Gönder</button>
+          <button className="btn--ikincil" onClick={() => setOdevModu(false)}>İptal</button>
+        </div>
+      </div>
+    )}
+
+    {odevSonuc && (
+      <p className={odevSonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>
+        {odevSonuc.metin}
+      </p>
+)}
 
       {kendiProfilim && (
         <div className="arkadas-liste">

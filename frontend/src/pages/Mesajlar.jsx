@@ -66,7 +66,7 @@ function Mesajlar() {
 
         <div className="mesajlar__konusma">
           {secili ? (
-            <Konusma digerId={secili.id} digerAd={secili.ad}  onMesajGonderildi={kutuYukle} />
+            <Konusma digerId={secili.id} digerAd={secili.ad}  />
           ) : (
             <p className="bos-durum">Bir konuşma seç.</p>
           )}

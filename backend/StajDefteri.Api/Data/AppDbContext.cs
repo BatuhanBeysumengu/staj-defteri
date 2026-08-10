@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
   public DbSet<Begeni> Begeniler => Set<Begeni>();
   public DbSet<Yorum> Yorumlar => Set<Yorum>();
   public DbSet<Mesaj> Mesajlar => Set<Mesaj>();
+  public DbSet<Odev> Odevler => Set<Odev>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

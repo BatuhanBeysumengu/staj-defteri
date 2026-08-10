@@ -91,4 +91,21 @@ public class KullanicilarController : ControllerBase
 
         return Ok(sonuclar);
     }
+    [Authorize]
+    [HttpGet("ogrencilerim")]
+    public async Task<IActionResult> Ogrencilerim()
+    {
+        var yetkiliId = int.Parse(User.FindFirst("id")!.Value);
+        var rol = User.FindFirst("rol")!.Value;
+
+        if (rol != "yetkili")
+            return Forbid();
+
+        var ogrenciler = await _db.Kullanicilar
+            .Where(k => k.YetkiliId == yetkiliId)
+            .Select(k => new { k.Id, k.Ad })
+            .ToListAsync();
+
+        return Ok(ogrenciler);
+    }
 } 

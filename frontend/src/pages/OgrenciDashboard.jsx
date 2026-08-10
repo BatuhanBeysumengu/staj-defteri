@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { useKayit } from "../context/KayitContext";
 import { ocrIstek, pdfIndir } from "../services/api";
 import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
+import OdevListesi from "../components/OdevListesi";
 
 function OgrenciDashboard() {
   const { kayitlar, kayitEkle, kayitlariYukle } = useKayit();
@@ -11,8 +12,8 @@ function OgrenciDashboard() {
   const [yeniIcerik, setYeniIcerik] = useState("");
   const [yukleniyor, setYukleniyor] = useState(false);
   const [secimModu, setSecimModu] = useState(false);
-  const [secililer, setSecililer] = useState([]);  
-  const [baslangic, setBaslangic] = useState("");    
+  const [secililer, setSecililer] = useState([]);
+  const [baslangic, setBaslangic] = useState("");
   const [bitis, setBitis] = useState("");
   const [gorunurluk, setGorunurluk] = useState("private");
 
@@ -22,7 +23,7 @@ function OgrenciDashboard() {
 
   const handleEkle = () => {
     if (!yeniIcerik.trim()) return;
-    kayitEkle(yeniIcerik, gorunurluk); 
+    kayitEkle(yeniIcerik, gorunurluk);
     setYeniIcerik("");
     setGorunurluk("private");
   };
@@ -35,6 +36,7 @@ function OgrenciDashboard() {
     setYukleniyor(false);
     if (sonuc) setYeniIcerik(sonuc.metin);
   };
+
   const secimToggle = (id) => {
     setSecililer((onceki) =>
       onceki.includes(id) ? onceki.filter((x) => x !== id) : [...onceki, id]
@@ -46,6 +48,7 @@ function OgrenciDashboard() {
     if (bitis && k.tarih > bitis) return false;
     return true;
   });
+
   const tumunuSec = () => {
     setSecililer(filtreliKayitlar.map((k) => k.id));
   };
@@ -59,86 +62,105 @@ function OgrenciDashboard() {
   return (
     <div className="dashboard">
       <Header />
-      <ArkadaslikIstekleri />
-      <div className="pdf-arac">
-        {!secimModu ? (
-          <button onClick={() => setSecimModu(true)}>📄 PDF İndir</button>
-        ) : (
-          <div className="pdf-arac__panel">
-            <div className="pdf-arac__tarih">
-              <label>
-                Başlangıç
-                <input type="date" value={baslangic} onChange={(e) => setBaslangic(e.target.value)} />
-              </label>
-              <label>
-                Bitiş
-                <input type="date" value={bitis} onChange={(e) => setBitis(e.target.value)} />
-              </label>
-            </div>
-            <div className="pdf-arac__butonlar">
-              <button className="btn--ikincil" onClick={tumunuSec}>Tümünü Seç</button>
-              <button className="btn--ikincil" onClick={temizle}>Temizle</button>
-              <button onClick={handleIndir}>
-                Seçilenleri İndir ({secililer.length})
-              </button>
-              <button className="btn--ikincil" onClick={() => { setSecimModu(false); temizle(); }}>
-                İptal
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
 
-      <div className="kayit-form">
-        <label className="foto-yukle">
-          📷 Defter fotoğrafı yükle
-          <input type="file" accept="image/*" onChange={handleFotograf} style={{ display: "none" }} />
-        </label>
-        {yukleniyor && <p className="foto-durum">Metin okunuyor...</p>}
-        <textarea
-          placeholder="Bugün ne yaptınız?"
-          value={yeniIcerik}
-          onChange={(e) => setYeniIcerik(e.target.value)}
-          rows={4}
-        />
-        <div className="kayit-form__alt">
-    <label className="gorunurluk-secici">
-      Görünürlük:
-      <select value={gorunurluk} onChange={(e) => setGorunurluk(e.target.value)}>
-        <option value="private">🔒 Sadece ben</option>
-        <option value="friends">👥 Arkadaşlarım</option>
-        <option value="public">🌍 Herkes</option>
-      </select>
-    </label>
-        <button onClick={handleEkle}>Kaydet</button>
-      </div>
-    </div>
-      {filtreliKayitlar.length === 0 ? (
-        <p className="bos-durum">Kayıt bulunmuyor.</p>
-      ) : (
-        filtreliKayitlar.map((kayit) => (
-          <div key={kayit.id} className="kayit-satir">
-            {secimModu && (
-              <input
-                type="checkbox"
-                className="kayit-secim"
-                checked={secililer.includes(kayit.id)}
-                onChange={() => secimToggle(kayit.id)}
-              />
-            )}
-            <div className="kayit-satir__kart">
-              <EntryCard
-                tarih={kayit.tarih}
-                icerik={kayit.icerik}
-                durum={kayit.durum}
-                redAciklamasi={kayit.redAciklamasi}
-                redTarihi={kayit.redTarihi}
-                reddedenAd={kayit.reddedenAd}
-              />
+      <div className="uc-panel">
+
+        <aside className="uc-panel__sol">
+          <div className="kayit-form">
+            <label className="foto-yukle">
+              📷 Defter fotoğrafı yükle
+              <input type="file" accept="image/*" onChange={handleFotograf} style={{ display: "none" }} />
+            </label>
+            {yukleniyor && <p className="foto-durum">Metin okunuyor...</p>}
+            <textarea
+              placeholder="Bugün ne yaptınız?"
+              value={yeniIcerik}
+              onChange={(e) => setYeniIcerik(e.target.value)}
+              rows={4}
+            />
+            <div className="kayit-form__alt">
+              <label className="gorunurluk-secici">
+                Görünürlük:
+                <select value={gorunurluk} onChange={(e) => setGorunurluk(e.target.value)}>
+                  <option value="private">🔒 Sadece ben</option>
+                  <option value="friends">👥 Arkadaşlarım</option>
+                  <option value="public">🌍 Herkes</option>
+                </select>
+              </label>
+              <button onClick={handleEkle}>Kaydet</button>
             </div>
           </div>
-        ))
-      )}
+
+          <div className="pdf-arac">
+            {!secimModu ? (
+              <button onClick={() => setSecimModu(true)}>📄 PDF İndir</button>
+            ) : (
+              <div className="pdf-arac__panel">
+                <div className="pdf-arac__tarih">
+                  <label>
+                    Başlangıç
+                    <input type="date" value={baslangic} onChange={(e) => setBaslangic(e.target.value)} />
+                  </label>
+                  <label>
+                    Bitiş
+                    <input type="date" value={bitis} onChange={(e) => setBitis(e.target.value)} />
+                  </label>
+                </div>
+                <div className="pdf-arac__butonlar">
+                  <button className="btn--ikincil" onClick={tumunuSec}>Tümünü Seç</button>
+                  <button className="btn--ikincil" onClick={temizle}>Temizle</button>
+                  <button onClick={handleIndir}>
+                    Seçilenleri İndir ({secililer.length})
+                  </button>
+                  <button className="btn--ikincil" onClick={() => { setSecimModu(false); temizle(); }}>
+                    İptal
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </aside>
+
+        <main className="uc-panel__orta">
+          <h2 className="uc-panel__baslik">Kayıtlarım</h2>
+          {filtreliKayitlar.length === 0 ? (
+            <p className="bos-durum">Kayıt bulunmuyor.</p>
+          ) : (
+            filtreliKayitlar.map((kayit) => (
+              <div key={kayit.id} className="kayit-satir">
+                {secimModu && (
+                  <input
+                    type="checkbox"
+                    className="kayit-secim"
+                    checked={secililer.includes(kayit.id)}
+                    onChange={() => secimToggle(kayit.id)}
+                  />
+                )}
+                <div className="kayit-satir__kart">
+                  <EntryCard
+                    tarih={kayit.tarih}
+                    icerik={kayit.icerik}
+                    durum={kayit.durum}
+                    redAciklamasi={kayit.redAciklamasi}
+                    redTarihi={kayit.redTarihi}
+                    reddedenAd={kayit.reddedenAd}
+                  />
+                </div>
+              </div>
+            ))
+          )}
+        </main>
+
+        <aside className="uc-panel__sag">
+          <div className="takvim-yer">
+            <h3 className="takvim-yer__baslik">📅 Takvim</h3>
+            <p className="takvim-yer__not">Ödev teslim tarihleri ve hatırlatmalar.</p>
+          </div>
+          <OdevListesi />
+          <ArkadaslikIstekleri />
+        </aside>
+
+      </div>
     </div>
   );
 }
