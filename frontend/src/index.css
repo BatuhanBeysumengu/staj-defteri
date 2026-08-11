@@ -1746,3 +1746,137 @@ button:disabled {
 .odev-kart--onaylandi { border-left-color: var(--renk-onaylandi); }
 .odev-kart--reddedildi { border-left-color: var(--renk-reddedildi); }
 .odev-kart--teslim_edildi { border-left-color: var(--renk-ana); }
+.takvim {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+}
+
+.takvim__baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--bosluk-m);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.takvim__baslik button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: var(--renk-yuzey);
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  color: var(--renk-metin);
+}
+
+.takvim__hafta {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.takvim__hafta-gun {
+  text-align: center;
+  font-size: 11px;
+  color: var(--renk-soluk);
+  padding: 4px 0;
+}
+
+.takvim__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.takvim__bos {
+  aspect-ratio: 1;
+}
+
+.takvim__gun {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  color: var(--renk-metin);
+  font-size: 13px;
+  position: relative;
+}
+
+.takvim__gun:hover {
+  background: var(--renk-yuzey);
+}
+
+.takvim__gun--dolu {
+  font-weight: 600;
+}
+
+.takvim__gun--secili {
+  background: var(--renk-ana);
+  color: white;
+}
+
+.takvim__nokta {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--renk-ana);
+  position: absolute;
+  bottom: 4px;
+}
+
+.takvim__gun--secili .takvim__nokta {
+  background: white;
+}
+
+.takvim__detay {
+  margin-top: var(--bosluk-m);
+  padding-top: var(--bosluk-m);
+  border-top: 1px solid var(--renk-cizgi);
+  font-size: 13px;
+}
+
+.takvim__odev {
+  display: flex;
+  flex-direction: column;
+  padding: var(--bosluk-s);
+  background: var(--renk-yuzey);
+  border-radius: var(--radius-s);
+  margin-top: var(--bosluk-s);
+}
+
+.takvim__odev-baslik {
+  font-weight: 500;
+}
+
+.takvim__odev-kisi {
+  font-size: 12px;
+  color: var(--renk-soluk);
+}
+
+.takvim__bos-not {
+  color: var(--renk-soluk);
+  margin-top: var(--bosluk-s);
+}
+.ust-bar__baslik-link {
+  text-decoration: none;
+}
+
+.ust-bar__baslik-link .ust-bar__baslik {
+  color: var(--renk-ana);
+  transition: opacity 0.15s;
+}
+
+.ust-bar__baslik-link:hover .ust-bar__baslik {
+  opacity: 0.8;
+}

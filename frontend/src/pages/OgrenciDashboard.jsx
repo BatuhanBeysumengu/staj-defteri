@@ -5,6 +5,7 @@ import { useKayit } from "../context/KayitContext";
 import { ocrIstek, pdfIndir } from "../services/api";
 import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
 import OdevListesi from "../components/OdevListesi";
+import Takvim from "../components/Takvim";
 
 function OgrenciDashboard() {
   const { kayitlar, kayitEkle, kayitlariYukle } = useKayit();
@@ -152,10 +153,7 @@ function OgrenciDashboard() {
         </main>
 
         <aside className="uc-panel__sag">
-          <div className="takvim-yer">
-            <h3 className="takvim-yer__baslik">📅 Takvim</h3>
-            <p className="takvim-yer__not">Ödev teslim tarihleri ve hatırlatmalar.</p>
-          </div>
+          <Takvim />
           <OdevListesi />
           <ArkadaslikIstekleri />
         </aside>

@@ -9,6 +9,7 @@ import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
 import OdevListesi from "../components/OdevListesi";
 import Modal from "../components/Modal";
 import OdevVerForm from "../components/OdevVerForm";
+import Takvim from "../components/Takvim";
 
 function YetkiliDashboard() {
   const { kullanici } = useAuth();
@@ -59,10 +60,7 @@ function YetkiliDashboard() {
         </main>
 
         <aside className="uc-panel__sag">
-          <div className="takvim-yer">
-            <h3 className="takvim-yer__baslik">📅 Takvim</h3>
-            <p className="takvim-yer__not">Ödev teslim tarihleri ve hatırlatmalar</p>
-          </div>
+          <Takvim />
           <OdevListesi />
           <GelenIstekler />
           <ArkadaslikIstekleri />
