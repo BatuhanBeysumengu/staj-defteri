@@ -4,7 +4,7 @@ namespace StajDefteri.Api.Services;
 
 public class OcrService
 {
-    public string MetinCikar(string dosyaYolu)
+    public static string MetinCikar(string dosyaYolu)
     {
         try
         {
@@ -15,9 +15,9 @@ public class OcrService
             return page.GetText().Trim();
         }
         catch (Exception ex)
-        {
-            Serilog.Log.Warning("OCR başarısız: {Hata}", ex.Message);
-            return "";
-        }
+            {
+                Serilog.Log.Warning(ex, "OCR başarısız");
+                return "";
+            }
     }
 }

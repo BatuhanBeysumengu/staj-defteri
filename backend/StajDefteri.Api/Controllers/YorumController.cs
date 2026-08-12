@@ -34,7 +34,7 @@ public class YorumController : ControllerBase
         var cevap = yorumlar.Select(y => new YorumCevabi(
             y.Id,
             y.KullaniciId,
-            adlar.ContainsKey(y.KullaniciId) ? adlar[y.KullaniciId] : "Bilinmeyen",
+            adlar.TryGetValue(y.KullaniciId, out var ad) ? ad : "Bilinmeyen",
             y.Icerik,
             y.Tarih
         )).ToList();

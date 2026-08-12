@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StajDefteri.Api.Data;
 using StajDefteri.Api.Models;
 using StajDefteri.Api.Dtos;
+using StajDefteri.Api.Services;
 
 namespace StajDefteri.Api.Controllers;
 
@@ -12,11 +13,14 @@ namespace StajDefteri.Api.Controllers;
 [Authorize]
 public class OdevController : ControllerBase
 {
+    private const string RolYetkili = "yetkili";
     private readonly AppDbContext _db;
+    private readonly BildirimServisi _bildirim;
 
-    public OdevController(AppDbContext db)
+    public OdevController(AppDbContext db, BildirimServisi bildirim)
     {
         _db = db;
+        _bildirim = bildirim;
     }
 
     [HttpPost("ver")]
@@ -25,7 +29,7 @@ public class OdevController : ControllerBase
         var verenId = int.Parse(User.FindFirst("id")!.Value);
         var rol = User.FindFirst("rol")!.Value;
 
-        if (rol != "yetkili")
+        if (rol != RolYetkili)
             return Forbid();
 
         if (string.IsNullOrWhiteSpace(istek.Baslik))
@@ -49,7 +53,13 @@ public class OdevController : ControllerBase
         _db.Odevler.Add(odev);
         await _db.SaveChangesAsync();
 
-        return Ok(new { odev.Id });
+        await _bildirim.Ekle(
+            istek.OgrenciId,
+            $"Sana yeni bir ödev verildi: '{istek.Baslik}'",
+            "odev"
+        );
+
+return Ok(new { odev.Id });
     }
 
     [HttpGet("benim")]
@@ -60,7 +70,7 @@ public class OdevController : ControllerBase
 
         List<Odev> odevler;
 
-        if (rol == "yetkili")
+        if (rol == RolYetkili)
         {
             odevler = await _db.Odevler
                 .Where(o => o.VerenId == kullaniciId)
@@ -76,7 +86,7 @@ public class OdevController : ControllerBase
         }
 
         var kisiIdler = odevler
-            .Select(o => rol == "yetkili" ? o.OgrenciId : o.VerenId)
+            .Select(o => rol == RolYetkili ? o.OgrenciId : o.VerenId)
             .Distinct()
             .ToList();
 
@@ -86,7 +96,7 @@ public class OdevController : ControllerBase
 
         var cevap = odevler.Select(o =>
         {
-            var kisiId = rol == "yetkili" ? o.OgrenciId : o.VerenId;
+            var kisiId = rol == RolYetkili ? o.OgrenciId : o.VerenId;
             return new OdevCevabi(
                 o.Id,
                 o.Baslik,
@@ -94,7 +104,7 @@ public class OdevController : ControllerBase
                 o.SonTeslimTarihi,
                 o.Durum,
                 kisiId,
-                adlar.ContainsKey(kisiId) ? adlar[kisiId] : "Bilinmeyen",
+                adlar.TryGetValue(kisiId, out var ad) ? ad : "Bilinmeyen",
                 o.TeslimNotu,
                 o.TeslimDosyaYolu,
                 o.RedAciklamasi
@@ -153,9 +163,15 @@ public async Task<IActionResult> Onayla(int id)
         return Forbid();
 
     odev.Durum = "onaylandi";
-    await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
 
-    return Ok(new { odev.Durum });
+        await _bildirim.Ekle(
+            odev.OgrenciId,
+            $"'{odev.Baslik}' ödevin onaylandı",
+            "odev"
+        );
+
+        return Ok(new { odev.Durum });
 }
 
 [HttpPut("{id}/reddet")]
@@ -172,6 +188,12 @@ public async Task<IActionResult> Reddet(int id, OdevRedIstegi istek)
     odev.Durum = "reddedildi";
     odev.RedAciklamasi = istek.Aciklama;
     await _db.SaveChangesAsync();
+
+    await _bildirim.Ekle(
+        odev.OgrenciId,
+        $"'{odev.Baslik}' ödevin reddedildi",
+        "odev"
+    );
 
     return Ok(new { odev.Durum });
 }

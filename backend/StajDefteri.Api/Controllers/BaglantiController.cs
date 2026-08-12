@@ -76,7 +76,7 @@ public class BaglantiController : ControllerBase
         var cevap = istekler.Select(b => new BaglantiIstegiCevabi(
             b.Id,
             b.OgrenciId,
-            adlar.ContainsKey(b.OgrenciId) ? adlar[b.OgrenciId] : "Bilinmeyen",
+            adlar.TryGetValue(b.OgrenciId, out var ad) ? ad : "Bilinmeyen",
             b.Mesaj,
             b.Durum,
             b.Tarih

@@ -72,9 +72,9 @@ public class KayitlarController : ControllerBase
             k.OgrenciId,
             k.RedAciklamasi,
             k.RedTarihi,
-            k.ReddedenId != null && isimler.ContainsKey(k.ReddedenId.Value)
-                ? isimler[k.ReddedenId.Value]
-                : null
+            k.ReddedenId != null && isimler.TryGetValue(k.ReddedenId.Value, out var reddedenAd)
+    ? reddedenAd
+    : null
         )).ToList();
 
         return Ok(cevap);
@@ -209,7 +209,7 @@ public class KayitlarController : ControllerBase
             await dosya.CopyToAsync(stream);
         }
 
-        var metin = _ocrService.MetinCikar(tamYol);
+        var metin = OcrService.MetinCikar(tamYol);
 
         return Ok(new { metin, dosyaYolu = $"/yuklenenler/{dosyaAdi}" });
     }
@@ -228,7 +228,7 @@ public class KayitlarController : ControllerBase
         if (kayitlar.Count == 0)
             return BadRequest(new { mesaj = "Seçili kayıt bulunamadı" });
 
-        var pdfBytes = _pdfService.KayitlarPdf(kullaniciAd, kayitlar);
+        var pdfBytes = PdfService.KayitlarPdf(kullaniciAd, kayitlar);
         return File(pdfBytes, "application/pdf", "staj-defteri.pdf");
     }
 }

@@ -6,6 +6,7 @@ using StajDefteri.Api.Controllers;
 using StajDefteri.Api.Data;
 using StajDefteri.Api.Dtos;
 using StajDefteri.Api.Models;
+using StajDefteri.Api.Services;
 using Xunit;
 
 namespace StajDefteri.Tests;
@@ -22,7 +23,8 @@ public class MesajControllerTests
 
     private MesajController KurController(AppDbContext db, int kullaniciId)
     {
-        var controller = new MesajController(db);
+        var bildirim = new BildirimServisi(db);
+        var controller = new MesajController(db, bildirim);
         var kimlik = new ClaimsIdentity(new[] { new Claim("id", kullaniciId.ToString()) });
         controller.ControllerContext = new ControllerContext
         {

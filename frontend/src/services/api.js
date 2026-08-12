@@ -299,3 +299,19 @@ export async function odevReddet(odevId, aciklama) {
   if (!cevap.ok) return null;
   return await cevap.json();
 }
+export async function bildirimlerim() {
+  const cevap = await apiIstek("/bildirim");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function bildirimSayisi() {
+  const cevap = await apiIstek("/bildirim/sayi");
+  if (!cevap.ok) return { sayi: 0 };
+  return await cevap.json();
+}
+
+export async function bildirimleriOkunduYap() {
+  const cevap = await apiIstek("/bildirim/okundu", { method: "PUT" });
+  return cevap.ok;
+}

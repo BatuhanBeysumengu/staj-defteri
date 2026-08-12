@@ -1,5 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace StajDefteri.Api.Dtos;
-public record MesajGonder(int AliciId, string? Icerik, int? PaylasilanKayitId);
+public record MesajGonder(
+    [property: JsonRequired] int AliciId,
+    string? Icerik,
+    int? PaylasilanKayitId
+);
 public record MesajCevabi(
     int Id,
     int GonderenId,

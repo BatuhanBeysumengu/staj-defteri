@@ -6,6 +6,7 @@ using StajDefteri.Api.Controllers;
 using StajDefteri.Api.Data;
 using StajDefteri.Api.Dtos;
 using StajDefteri.Api.Models;
+using StajDefteri.Api.Services;
 using Xunit;
 
 namespace StajDefteri.Tests;
@@ -22,7 +23,8 @@ public class OdevControllerTests
 
     private OdevController KurController(AppDbContext db, int kullaniciId, string rol)
     {
-        var controller = new OdevController(db);
+        var bildirim = new BildirimServisi(db);
+        var controller = new OdevController(db, bildirim);
 
         var kimlik = new ClaimsIdentity(new[]
         {

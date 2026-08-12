@@ -11,7 +11,7 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("StajDefteri", Serilog.Events.LogEventLevel.Information)
     .WriteTo.Console()
     .WriteTo.File("Loglar/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();;
+    .CreateLogger();
 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<PdfService>();
-
+builder.Services.AddScoped<BildirimServisi>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=stajdefteri.db"));
 
@@ -67,4 +67,4 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

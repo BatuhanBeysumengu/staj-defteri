@@ -12,6 +12,7 @@ namespace StajDefteri.Api.Controllers;
 [Authorize]
 public class ArkadaslikController : ControllerBase
 {
+    private const string DurumKabul = "kabul";
     private readonly AppDbContext _db;
 
     public ArkadaslikController(AppDbContext db)
@@ -67,7 +68,7 @@ public class ArkadaslikController : ControllerBase
         var cevap = istekler.Select(a => new ArkadaslikIstegiCevabi(
             a.Id,
             a.GonderenId,
-            adlar.ContainsKey(a.GonderenId) ? adlar[a.GonderenId] : "Bilinmeyen",
+            adlar.TryGetValue(a.GonderenId, out var ad) ? ad : "Bilinmeyen",
             a.Tarih
         )).ToList();
 
@@ -84,7 +85,7 @@ public class ArkadaslikController : ControllerBase
         if (istek.AliciId != kullaniciId)
             return Forbid();
 
-        istek.Durum = "kabul";
+        istek.Durum = DurumKabul;
         await _db.SaveChangesAsync();
         return Ok(new { mesaj = "Arkadaşlık kabul edildi" });
     }
@@ -110,7 +111,7 @@ public class ArkadaslikController : ControllerBase
         var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
 
         var arkadasliklar = await _db.Arkadasliklar
-            .Where(a => a.Durum == "kabul" &&
+            .Where(a => a.Durum == DurumKabul &&
                         (a.GonderenId == kullaniciId || a.AliciId == kullaniciId))
             .ToListAsync();
 
@@ -129,7 +130,7 @@ public class ArkadaslikController : ControllerBase
 public async Task<IActionResult> Listesi(int kullaniciId)
 {
     var arkadasliklar = await _db.Arkadasliklar
-        .Where(a => a.Durum == "kabul" &&
+        .Where(a => a.Durum == DurumKabul &&
                     (a.GonderenId == kullaniciId || a.AliciId == kullaniciId))
         .ToListAsync();
 
@@ -156,7 +157,7 @@ public async Task<IActionResult> Listesi(int kullaniciId)
         if (iliski is null)
             return Ok(new { durum = "yok" });
 
-        if (iliski.Durum == "kabul")
+        if (iliski.Durum == DurumKabul)
             return Ok(new { durum = "arkadas" });
 
         if (iliski.GonderenId == kullaniciId)

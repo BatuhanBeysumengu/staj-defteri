@@ -1,5 +1,7 @@
+using System.Text.Json.Serialization;
+
 namespace StajDefteri.Api.Dtos;
-public record BaglantiIstegiGonder(int YetkiliId, string Mesaj);
+public record BaglantiIstegiGonder([property: JsonRequired] int YetkiliId, string Mesaj);
 public record BaglantiIstegiCevabi(
     int Id,
     int OgrenciId,

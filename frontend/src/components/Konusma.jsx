@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { konusmaGetir, mesajGonder } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-function Konusma({ digerId, digerAd }) {
+function Konusma({ digerId, digerAd, onMesajGonderildi }) {
   const { kullanici } = useAuth();
   const [mesajlar, setMesajlar] = useState([]);
   const [yeni, setYeni] = useState("");

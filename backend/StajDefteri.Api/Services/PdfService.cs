@@ -7,7 +7,7 @@ namespace StajDefteri.Api.Services;
 
 public class PdfService
 {
-    public byte[] KayitlarPdf(string ogrenciAd, List<DefterKaydi> kayitlar)
+    public static byte[] KayitlarPdf(string ogrenciAd, List<DefterKaydi> kayitlar)
     {
         var document = Document.Create(container =>
         {

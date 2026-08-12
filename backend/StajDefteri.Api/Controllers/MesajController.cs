@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StajDefteri.Api.Data;
 using StajDefteri.Api.Models;
 using StajDefteri.Api.Dtos;
+using StajDefteri.Api.Services;
 
 namespace StajDefteri.Api.Controllers;
 
@@ -13,11 +14,14 @@ namespace StajDefteri.Api.Controllers;
 public class MesajController : ControllerBase
 {
     private readonly AppDbContext _db;
+    private readonly BildirimServisi _bildirim;
 
-    public MesajController(AppDbContext db)
+    public MesajController(AppDbContext db, BildirimServisi bildirim)
     {
         _db = db;
+        _bildirim = bildirim;
     }
+
     private async Task<bool> ArkadasMi(int a, int b)
     {
         return await _db.Arkadasliklar.AnyAsync(x =>
@@ -25,6 +29,7 @@ public class MesajController : ControllerBase
             ((x.GonderenId == a && x.AliciId == b) ||
              (x.GonderenId == b && x.AliciId == a)));
     }
+
     [HttpPost("gonder")]
     public async Task<IActionResult> Gonder(MesajGonder istek)
     {
@@ -49,8 +54,17 @@ public class MesajController : ControllerBase
         _db.Mesajlar.Add(yeni);
         await _db.SaveChangesAsync();
 
+        var gonderen = await _db.Kullanicilar.FindAsync(gonderenId);
+        await _bildirim.Ekle(
+            istek.AliciId,
+            $"{gonderen?.Ad} sana mesaj gönderdi",
+            "mesaj",
+            "/mesajlar"
+        );
+
         return Ok(new { yeni.Id });
     }
+
     [HttpGet("konusma/{digerId}")]
     public async Task<IActionResult> Konusma(int digerId)
     {
@@ -62,6 +76,7 @@ public class MesajController : ControllerBase
                 (m.GonderenId == digerId && m.AliciId == benId))
             .OrderBy(m => m.Tarih)
             .ToListAsync();
+
         var kayitIdler = mesajlar
             .Where(m => m.PaylasilanKayitId != null)
             .Select(m => m.PaylasilanKayitId!.Value)
@@ -78,41 +93,40 @@ public class MesajController : ControllerBase
             m.AliciId,
             m.Icerik,
             m.PaylasilanKayitId,
-            m.PaylasilanKayitId != null && kayitOnizleme.ContainsKey(m.PaylasilanKayitId.Value)
-                ? kayitOnizleme[m.PaylasilanKayitId.Value]
-                : null,
+            m.PaylasilanKayitId != null && kayitOnizleme.TryGetValue(m.PaylasilanKayitId.Value, out var onizleme) ? onizleme : null,
             m.Tarih
         )).ToList();
 
         return Ok(cevap);
     }
-   [HttpGet("kutu")]
-public async Task<IActionResult> Kutu()
-{
-    var benId = int.Parse(User.FindFirst("id")!.Value);
 
-    var mesajlar = await _db.Mesajlar
-        .Where(m => m.GonderenId == benId || m.AliciId == benId)
-        .OrderByDescending(m => m.Tarih)
-        .ToListAsync();
+    [HttpGet("kutu")]
+    public async Task<IActionResult> Kutu()
+    {
+        var benId = int.Parse(User.FindFirst("id")!.Value);
 
-    var konusmalar = mesajlar
-        .GroupBy(m => m.GonderenId == benId ? m.AliciId : m.GonderenId)
-        .Select(g => new { DigerId = g.Key, SonMesaj = g.OrderByDescending(x => x.Tarih).First() })
-        .ToList();
+        var mesajlar = await _db.Mesajlar
+            .Where(m => m.GonderenId == benId || m.AliciId == benId)
+            .OrderByDescending(m => m.Tarih)
+            .ToListAsync();
 
-    var digerIdler = konusmalar.Select(k => k.DigerId).ToList();
-    var adlar = await _db.Kullanicilar
-        .Where(k => digerIdler.Contains(k.Id))
-        .ToDictionaryAsync(k => k.Id, k => k.Ad);
+        var konusmalar = mesajlar
+            .GroupBy(m => m.GonderenId == benId ? m.AliciId : m.GonderenId)
+            .Select(g => new { DigerId = g.Key, SonMesaj = g.OrderByDescending(x => x.Tarih).First() })
+            .ToList();
 
-    var cevap = konusmalar.Select(k => new KonusmaOzeti(
-        k.DigerId,
-        adlar.ContainsKey(k.DigerId) ? adlar[k.DigerId] : "Bilinmeyen",
-        k.SonMesaj.Icerik ?? "Kayit paylasildi",
-        k.SonMesaj.Tarih
-    )).OrderByDescending(k => k.SonTarih).ToList();
+        var digerIdler = konusmalar.Select(k => k.DigerId).ToList();
+        var adlar = await _db.Kullanicilar
+            .Where(k => digerIdler.Contains(k.Id))
+            .ToDictionaryAsync(k => k.Id, k => k.Ad);
 
-    return Ok(cevap);
-}
+        var cevap = konusmalar.Select(k => new KonusmaOzeti(
+            k.DigerId,
+            adlar.TryGetValue(k.DigerId, out var ad) ? ad : "Bilinmeyen",
+            k.SonMesaj.Icerik ?? "Kayit paylasildi",
+            k.SonMesaj.Tarih
+        )).OrderByDescending(k => k.SonTarih).ToList();
+
+        return Ok(cevap);
+    }
 }
