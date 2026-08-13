@@ -11,8 +11,8 @@ export async function girisYap(email, sifre) {
     if (!cevap.ok) return null;
 
     return await cevap.json();   
-  } catch (hata) {
-    console.error("Giriş isteği başarısız:", hata);
+  } catch (error_) {
+    console.error("Giriş isteği başarısız:", error_);
     return null;
   }
 }
@@ -25,8 +25,8 @@ export async function ogrenciEkle(ad, email, sifre, yetkiliId) {
     });
 
     if (!cevap.ok) {
-      const hata = await cevap.json();
-      return { basarili: false, mesaj: hata.mesaj || "Ekleme başarısız" };
+      const error_ = await cevap.json();
+      return { basarili: false, mesaj: error_.mesaj || "Ekleme başarısız" };
     }
 
     const yeni = await cevap.json();
