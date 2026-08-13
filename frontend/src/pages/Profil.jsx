@@ -15,6 +15,16 @@ import {
 import { useAuth } from "../context/AuthContext";
 import KayitDetay from "../components/KayitDetay";
 
+const GORUNURLUK_IKONLARI = {
+  public: "🌍",
+  friends: "👥",
+};
+
+const KAYIT_DURUM_ETIKETLERI = {
+  onaylandi: "✓ Onaylandı",
+  reddedildi: "Reddedildi",
+};
+
 function Profil() {
   const { id } = useParams();
   const { kullanici } = useAuth();
@@ -131,16 +141,14 @@ function Profil() {
   const baglanmaGonderilebilir =
     kullanici.rol === "ogrenci" && profil.rol === "yetkili" && !kendiProfilim;
 
-  const gorunurlukIkon = (g) =>
-    g === "public" ? "🌍" : g === "friends" ? "👥" : "🔒";
+  const gorunurlukIkon = (g) => GORUNURLUK_IKONLARI[g] || "🔒";
 
-  const durumEtiket = (d) =>
-    d === "onaylandi" ? "✓ Onaylandı" : d === "reddedildi" ? "Reddedildi" : "Bekliyor";
+  const durumEtiket = (d) => KAYIT_DURUM_ETIKETLERI[d] || "Bekliyor";
 
   return (
     <div className="dashboard">
       <Header />
-      <button className="geri-btn" onClick={() => navigate(-1)}>← Geri</button>
+      <button type="button" className="geri-btn" onClick={() => navigate(-1)}>← Geri</button>
 
       <div className="profil-ust">
         <div className="profil-avatar profil-avatar--buyuk">
@@ -161,25 +169,25 @@ function Profil() {
             {!kendiProfilim && arkDurum && (
               <>
               {kullanici.rol === "yetkili" && profil.rol === "ogrenci" && (
-                <button onClick={() => setOdevModu(true)}>Ödev Ver</button>
-)}
-               <button onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}> Mesaj Gönder</button>
+                <button type="button" onClick={() => setOdevModu(true)}>Ödev Ver</button>
+              )}
+              <button type="button" onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}> Mesaj Gönder</button>
                 {arkDurum.durum === "yok" && (
-                  <button onClick={handleArkadasEkle}>Arkadaş Ekle</button>
+                  <button type="button" onClick={handleArkadasEkle}>Arkadaş Ekle</button>
                 )}
                 {arkDurum.durum === "gonderildi" && (
-                  <button className="btn--ikincil" disabled>İstek Gönderildi</button>
+                  <button type="button" className="btn--ikincil" disabled>İstek Gönderildi</button>
                 )}
                 {arkDurum.durum === "geldi" && (
-                  <button onClick={handleArkadasKabul}>İsteği Kabul Et</button>
+                  <button type="button" onClick={handleArkadasKabul}>İsteği Kabul Et</button>
                 )}
                 {arkDurum.durum === "arkadas" && (
-                  <button className="btn--ikincil" disabled>✓ Arkadaşsınız</button>
+                  <button type="button" className="btn--ikincil" disabled>✓ Arkadaşsınız</button>
                 )}
               </>
             )}
             {baglanmaGonderilebilir && !istekModu && (
-              <button onClick={() => setIstekModu(true)}>Bağlanma İsteği Gönder</button>
+              <button type="button" onClick={() => setIstekModu(true)}>Bağlanma İsteği Gönder</button>
             )}
           </div>
         </div>
@@ -194,8 +202,8 @@ function Profil() {
             rows={3}
           />
           <div className="profil-istek__aksiyon">
-            <button onClick={handleBaglanmaGonder}>Gönder</button>
-            <button className="btn--ikincil" onClick={() => setIstekModu(false)}>İptal</button>
+            <button type="button" onClick={handleBaglanmaGonder}>Gönder</button>
+            <button type="button" className="btn--ikincil" onClick={() => setIstekModu(false)}>İptal</button>
           </div>
         </div>
       )}
@@ -226,8 +234,8 @@ function Profil() {
           <input type="date" value={odevTarih} onChange={(e) => setOdevTarih(e.target.value)} />
         </label>
         <div className="odev-form__aksiyon">
-          <button onClick={handleOdevVer}>Gönder</button>
-          <button className="btn--ikincil" onClick={() => setOdevModu(false)}>İptal</button>
+          <button type="button" onClick={handleOdevVer}>Gönder</button>
+          <button type="button" className="btn--ikincil" onClick={() => setOdevModu(false)}>İptal</button>
         </div>
       </div>
     )}
@@ -272,7 +280,7 @@ function Profil() {
         ) : (
           <div className="kayit-grid">
             {kayitlar.map((k) => (
-              <button key={k.id} className="kayit-kare" onClick={() => setSeciliKayit(k)}>
+              <button type="button" key={k.id} className="kayit-kare" onClick={() => setSeciliKayit(k)}>
                 <div className="kayit-kare__ust">
                   <span className="kayit-kare__tarih">{k.tarih}</span>
                   <span className="kayit-kare__ikon">{gorunurlukIkon(k.gorunurluk)}</span>

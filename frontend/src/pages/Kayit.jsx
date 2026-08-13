@@ -68,14 +68,14 @@ function Kayit() {
           onChange={(e) => setDavetKodu(e.target.value)}
         />
       ) : (
-        <button className="link-btn" onClick={() => setKodGoster(true)}>
+        <button type="button" className="link-btn" onClick={() => setKodGoster(true)}>
           Davet kodum var
         </button>
       )}
 
       {hata && <p className="hata">{hata}</p>}
 
-      <button onClick={handleKayit}>Kayıt Ol</button>
+      <button type="submit" onClick={handleKayit}>Kayıt Ol</button>
 
       <p className="alt-link">
         Zaten hesabın var mı? <Link to="/login">Giriş yap</Link>

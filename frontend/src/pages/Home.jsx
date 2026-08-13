@@ -21,7 +21,7 @@ function Home() {
           Kağıt defter taşımaya gerek yok.
         </p>
 
-        <button onClick={handleTiklama}>
+        <button type="button" onClick={handleTiklama}>
           {kullanici ? "Panele Git" : "Giriş Yap"}
         </button>
 

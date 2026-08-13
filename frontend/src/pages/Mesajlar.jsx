@@ -28,6 +28,7 @@ function Mesajlar() {
 
           {kutu.map((k) => (
             <button
+              type="button"
               key={k.kullaniciId}
               className={`konusma-oge ${secili?.id === k.kullaniciId ? "konusma-oge--aktif" : ""}`}
               onClick={() => setSecili({ id: k.kullaniciId, ad: k.kullaniciAd })}
@@ -45,6 +46,7 @@ function Mesajlar() {
               <h3 className="mesajlar__altbaslik">Arkadaşlar</h3>
               {mesajsizArkadaslar.map((a) => (
                 <button
+                  type="button"
                   key={a.id}
                   className={`konusma-oge ${secili?.id === a.id ? "konusma-oge--aktif" : ""}`}
                   onClick={() => setSecili({ id: a.id, ad: a.ad })}

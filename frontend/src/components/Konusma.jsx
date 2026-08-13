@@ -68,7 +68,7 @@ function Konusma({ digerId, digerAd, onMesajGonderildi }) {
           onChange={(e) => setYeni(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleGonder()}
         />
-        <button onClick={handleGonder}>Gönder</button>
+        <button type="button" onClick={handleGonder}>Gönder</button>
       </div>
     </div>
   );

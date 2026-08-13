@@ -44,7 +44,7 @@ function OgrenciTakip() {
               gonderilen.includes(o.id) ? (
                 <span className="takip-oge__gonderildi">✓ Gönderildi</span>
               ) : (
-                <button className="takip-oge__buton" onClick={() => handleHatirlat(o.id)}>
+                <button type="button" className="takip-oge__buton" onClick={() => handleHatirlat(o.id)}>
                   Hatırlat
                 </button>
               )

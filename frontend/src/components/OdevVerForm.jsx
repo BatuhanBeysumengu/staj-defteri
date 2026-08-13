@@ -65,7 +65,7 @@ function OdevVerForm({ onTamam }) {
         <input type="date" value={tarih} onChange={(e) => setTarih(e.target.value)} />
       </label>
 
-      <button onClick={handleGonder}>Ödevi Ver</button>
+      <button type="button" onClick={handleGonder}>Ödevi Ver</button>
 
       {sonuc && (
         <p className={sonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>

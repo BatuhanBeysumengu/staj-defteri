@@ -89,13 +89,13 @@ function OgrenciDashboard() {
                   <option value="public">🌍 Herkes</option>
                 </select>
               </label>
-              <button onClick={handleEkle}>Kaydet</button>
+              <button type="button" onClick={handleEkle}>Kaydet</button>
             </div>
           </div>
 
           <div className="pdf-arac">
             {!secimModu ? (
-              <button onClick={() => setSecimModu(true)}>📄 PDF İndir</button>
+              <button type="button" onClick={() => setSecimModu(true)}>📄 PDF İndir</button>
             ) : (
               <div className="pdf-arac__panel">
                 <div className="pdf-arac__tarih">
@@ -109,12 +109,12 @@ function OgrenciDashboard() {
                   </label>
                 </div>
                 <div className="pdf-arac__butonlar">
-                  <button className="btn--ikincil" onClick={tumunuSec}>Tümünü Seç</button>
-                  <button className="btn--ikincil" onClick={temizle}>Temizle</button>
-                  <button onClick={handleIndir}>
+                  <button type="button" className="btn--ikincil" onClick={tumunuSec}>Tümünü Seç</button>
+                  <button type="button" className="btn--ikincil" onClick={temizle}>Temizle</button>
+                  <button type="button" onClick={handleIndir}>
                     Seçilenleri İndir ({secililer.length})
                   </button>
-                  <button className="btn--ikincil" onClick={() => { setSecimModu(false); temizle(); }}>
+                  <button type="button" className="btn--ikincil" onClick={() => { setSecimModu(false); temizle(); }}>
                     İptal
                   </button>
                 </div>

@@ -72,7 +72,7 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
 
   return (
     <div className="kayit-detay">
-      <button className="geri-btn" onClick={onGeri}>← Kayıtlara dön</button>
+      <button type="button" className="geri-btn" onClick={onGeri}>← Kayıtlara dön</button>
 
       <div className="kayit-detay__kart">
         <div className="kayit-detay__ust">
@@ -98,13 +98,14 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
 
         <div className="kayit-detay__aksiyon">
           <button
+            type="button"
             className={`begeni-btn ${begeni.benBegendim ? "begeni-btn--aktif" : ""}`}
             onClick={handleBegeni}
           >
             {begeni.benBegendim ? "❤️" : "🤍"} {begeni.sayi}
           </button>
 
-          <button className="btn--ikincil" onClick={handlePaylasAc}>
+          <button type="button" className="btn--ikincil" onClick={handlePaylasAc}>
             📤 Arkadaşa Gönder
           </button>
         </div>
@@ -118,6 +119,7 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
             ) : (
               arkadaslar.map((a) => (
                 <button
+                  type="button"
                   key={a.id}
                   className="paylas-oge"
                   onClick={() => handleKaydiGonder(a.id)}
@@ -142,7 +144,7 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
             onChange={(e) => setYeniYorum(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleYorumEkle()}
           />
-          <button onClick={handleYorumEkle}>Gönder</button>
+          <button type="button" onClick={handleYorumEkle}>Gönder</button>
         </div>
 
         {yorumlar.length === 0 ? (
@@ -158,7 +160,7 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
               </div>
               <p className="yorum-oge__icerik">{y.icerik}</p>
               {y.kullaniciId === kullanici.id && (
-                <button className="yorum-sil" onClick={() => handleYorumSil(y.id)}>
+                <button type="button" className="yorum-sil" onClick={() => handleYorumSil(y.id)}>
                   Sil
                 </button>
               )}

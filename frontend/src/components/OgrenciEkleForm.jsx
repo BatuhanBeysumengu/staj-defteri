@@ -41,7 +41,7 @@ function OgrenciEkleForm() {
         </p>
       )}
 
-      <button onClick={handleEkle}>Ekle</button>
+      <button type="button" onClick={handleEkle}>Ekle</button>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
 
 const TemaContext = createContext(null);
 
@@ -16,12 +16,14 @@ export function TemaProvider({ children }) {
     localStorage.setItem("tema", tema);
   }, [tema]);
 
-  const temaDegistir = () => {
+  const temaDegistir = useCallback(() => {
     setTema((onceki) => (onceki === "koyu" ? "acik" : "koyu"));
-  };
+  }, []);
+
+  const value = useMemo(() => ({ tema, temaDegistir }), [tema, temaDegistir]);
 
   return (
-    <TemaContext.Provider value={{ tema, temaDegistir }}>
+    <TemaContext.Provider value={value}>
       {children}
     </TemaContext.Provider>
   );

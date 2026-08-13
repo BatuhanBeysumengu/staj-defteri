@@ -34,8 +34,8 @@ function ArkadaslikIstekleri() {
             </span>
           </div>
           <div className="istek-kart__aksiyon">
-            <button onClick={() => handleKabul(istek.id)}>Kabul Et</button>
-            <button className="btn--tehlike" onClick={() => handleRet(istek.id)}>Reddet</button>
+            <button type="button" onClick={() => handleKabul(istek.id)}>Kabul Et</button>
+            <button type="button" className="btn--tehlike" onClick={() => handleRet(istek.id)}>Reddet</button>
           </div>
         </div>
       ))}

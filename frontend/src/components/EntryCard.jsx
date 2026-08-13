@@ -59,9 +59,9 @@ function EntryCard({
       )}
       {(onOnayla || onReddet) && (
         <div className="entry-card__aksiyonlar">
-          {onOnayla && !redModu && <button onClick={onOnayla}>Onayla</button>}
+          {onOnayla && !redModu && <button type="button" onClick={onOnayla}>Onayla</button>}
           {onReddet && (
-            <button className="btn--tehlike" onClick={handleReddet}>
+            <button type="button" className="btn--tehlike" onClick={handleReddet}>
               {redModu ? "Reddi Gönder" : "Reddet"}
             </button>
           )}

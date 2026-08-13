@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo, useCallback } from "react";
 
 const AuthContext = createContext(null);
 
@@ -8,20 +8,25 @@ export function AuthProvider({ children }) {
     return kayitli ? JSON.parse(kayitli) : null;
   });
 
-  const giris = (kullaniciBilgisi, token) => {
+  const giris = useCallback((kullaniciBilgisi, token) => {
     setKullanici(kullaniciBilgisi);
     localStorage.setItem("kullanici", JSON.stringify(kullaniciBilgisi));
     localStorage.setItem("token", token);
-  };
+  }, []);
 
-  const cikis = () => {
+  const cikis = useCallback(() => {
     setKullanici(null);
     localStorage.removeItem("kullanici");
     localStorage.removeItem("token");
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ kullanici, giris, cikis }),
+    [kullanici, giris, cikis]
+  );
 
   return (
-    <AuthContext.Provider value={{ kullanici, giris, cikis }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

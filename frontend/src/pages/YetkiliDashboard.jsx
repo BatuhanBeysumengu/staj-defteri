@@ -29,8 +29,8 @@ function YetkiliDashboard() {
       <div className="uc-panel">
 
         <aside className="uc-panel__sol">
-        <button onClick={() => setOgrenciEkleAcik(true)}>+ Öğrenci Ekle</button>
-        <button onClick={() => setOdevVerAcik(true)}>+ Ödev Ver</button>
+        <button type="button" onClick={() => setOgrenciEkleAcik(true)}>+ Öğrenci Ekle</button>
+        <button type="button" onClick={() => setOdevVerAcik(true)}>+ Ödev Ver</button>
         </aside>
 
         <main className="uc-panel__orta">

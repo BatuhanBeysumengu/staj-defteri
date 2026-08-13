@@ -3,6 +3,18 @@ import { odevlerim, odevTeslim, odevDosyaYukle, odevOnayla, odevReddet } from ".
 import { useAuth } from "../context/AuthContext";
 import { API_URL } from "../services/api";
 
+const ODEV_DURUM_ETIKETLERI = {
+  onaylandi: "✓ Onaylandı",
+  reddedildi: "Reddedildi",
+  teslim_edildi: "Teslim edildi",
+};
+
+const teslimButonMetni = (durum) => {
+  if (durum === "reddedildi") return "Yeniden Teslim Et";
+  if (durum === "teslim_edildi") return "Güncelle";
+  return "Teslim Et";
+};
+
 function OdevListesi() {
   const { kullanici } = useAuth();
   const [odevler, setOdevler] = useState([]);
@@ -54,10 +66,23 @@ function OdevListesi() {
 
   const dosyaTamYolu = (yol) => `${API_URL.replace("/api", "")}${yol}`;
 
-  const durumEtiket = (d) =>
-    d === "onaylandi" ? "✓ Onaylandı" :
-    d === "reddedildi" ? "Reddedildi" :
-    d === "teslim_edildi" ? "Teslim edildi" : "Bekliyor";
+  const durumEtiket = (d) => ODEV_DURUM_ETIKETLERI[d] || "Bekliyor";
+
+  const ogrenciAksiyonuGoster = (o) => {
+    if (teslimModu === o.id) return null;
+    if (o.durum === "onaylandi") {
+      return <span className="odev-kart__durum odev-kart__durum--onaylandi">✓ Onaylandı</span>;
+    }
+    return (
+      <button
+        type="button"
+        className={o.durum === "teslim_edildi" ? "btn--ikincil" : ""}
+        onClick={() => { setTeslimModu(o.id); setNot(o.teslimNotu || ""); setDosya(null); }}
+      >
+        {teslimButonMetni(o.durum)}
+      </button>
+    );
+  };
 
   return (
     <div className="odev-listesi">
@@ -96,18 +121,7 @@ function OdevListesi() {
               </span>
 
               {kullanici.rol === "ogrenci" ? (
-                teslimModu === o.id ? null : (
-                  o.durum === "onaylandi" ? (
-                    <span className="odev-kart__durum odev-kart__durum--onaylandi">✓ Onaylandı</span>
-                  ) : (
-                    <button
-                      className={o.durum === "teslim_edildi" ? "btn--ikincil" : ""}
-                      onClick={() => { setTeslimModu(o.id); setNot(o.teslimNotu || ""); setDosya(null); }}
-                    >
-                      {o.durum === "reddedildi" ? "Yeniden Teslim Et" : o.durum === "teslim_edildi" ? "Güncelle" : "Teslim Et"}
-                    </button>
-                  )
-                )
+                ogrenciAksiyonuGoster(o)
               ) : (
                 <span className={`odev-kart__durum odev-kart__durum--${o.durum}`}>
                   {gecti ? "Süresi geçti" : durumEtiket(o.durum)}
@@ -126,14 +140,14 @@ function OdevListesi() {
                       rows={2}
                     />
                     <div className="odev-red-form__aksiyon">
-                      <button onClick={() => handleReddet(o.id)}>Reddet</button>
-                      <button className="btn--ikincil" onClick={() => setRedModu(null)}>İptal</button>
+                      <button type="button" onClick={() => handleReddet(o.id)}>Reddet</button>
+                      <button type="button" className="btn--ikincil" onClick={() => setRedModu(null)}>İptal</button>
                     </div>
                   </div>
                 ) : (
                   <>
-                    <button onClick={() => handleOnayla(o.id)}>Onayla</button>
-                    <button className="btn--ikincil" onClick={() => { setRedModu(o.id); setRedAciklama(""); }}>Reddet</button>
+                    <button type="button" onClick={() => handleOnayla(o.id)}>Onayla</button>
+                    <button type="button" className="btn--ikincil" onClick={() => { setRedModu(o.id); setRedAciklama(""); }}>Reddet</button>
                   </>
                 )}
               </div>
@@ -153,8 +167,8 @@ function OdevListesi() {
                 </label>
                 {dosya && <span className="odev-teslim-form__dosyaad">{dosya.name}</span>}
                 <div className="odev-teslim-form__aksiyon">
-                  <button onClick={() => handleTeslim(o.id)}>Gönder</button>
-                  <button className="btn--ikincil" onClick={() => setTeslimModu(null)}>İptal</button>
+                  <button type="button" onClick={() => handleTeslim(o.id)}>Gönder</button>
+                  <button type="button" className="btn--ikincil" onClick={() => setTeslimModu(null)}>İptal</button>
                 </div>
               </div>
             )}

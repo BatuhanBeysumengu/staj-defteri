@@ -44,7 +44,7 @@ function Login() {
         onChange={(e) => setSifre(e.target.value)}
       />
       {hata && <p className="hata">{hata}</p>}
-      <button onClick={handleGiris}>Giriş Yap</button>
+      <button type="submit" onClick={handleGiris}>Giriş Yap</button>
       <p className="alt-link">
   Hesabın yok mu? <Link to="/kayit">Kayıt ol</Link>
 </p>

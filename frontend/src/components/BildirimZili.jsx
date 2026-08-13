@@ -48,7 +48,7 @@ function BildirimZili() {
 
   return (
     <div className="bildirim-zili" ref={ref}>
-      <button className="bildirim-zili__buton" onClick={zileTikla} title="Bildirimler">
+      <button type="button" className="bildirim-zili__buton" onClick={zileTikla} title="Bildirimler">
         🔔
         {sayi > 0 && <span className="bildirim-zili__rozet">{sayi > 9 ? "9+" : sayi}</span>}
       </button>
@@ -61,6 +61,7 @@ function BildirimZili() {
           ) : (
             bildirimler.map((b) => (
               <button
+                type="button"
                 key={b.id}
                 className={`bildirim-oge ${b.okundu ? "" : "bildirim-oge--yeni"}`}
                 onClick={() => bildirimeTikla(b)}

@@ -40,9 +40,9 @@ function Takvim() {
   return (
     <div className="takvim">
       <div className="takvim__baslik">
-        <button onClick={ayGeri}>‹</button>
+        <button type="button" onClick={ayGeri}>‹</button>
         <span>{ayAdlari[ay]} {yil}</span>
-        <button onClick={ayIleri}>›</button>
+        <button type="button" onClick={ayIleri}>›</button>
       </div>
 
       <div className="takvim__hafta">
@@ -57,6 +57,7 @@ function Takvim() {
           const oSayi = gunOdevleri(g).length;
           return (
             <button
+              type="button"
               key={i}
               className={`takvim__gun ${oSayi > 0 ? "takvim__gun--dolu" : ""} ${seciliGun === g ? "takvim__gun--secili" : ""}`}
               onClick={() => setSeciliGun(seciliGun === g ? null : g)}
