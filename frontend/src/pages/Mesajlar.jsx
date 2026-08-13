@@ -16,8 +16,8 @@ function Mesajlar() {
     yukle();
   }, []);
 
-  const kutuIdler = kutu.map((k) => k.kullaniciId);
-  const mesajsizArkadaslar = arkadaslar.filter((a) => !kutuIdler.includes(a.id));
+  const kutuIdler = new Set(kutu.map((k) => k.kullaniciId));
+  const mesajsizArkadaslar = arkadaslar.filter((a) => !kutuIdler.has(a.id));
 
   return (
     <div className="dashboard">
@@ -68,7 +68,7 @@ function Mesajlar() {
 
         <div className="mesajlar__konusma">
           {secili ? (
-            <Konusma digerId={secili.id} digerAd={secili.ad}  />
+            <Konusma digerId={secili.id} digerAd={secili.ad} />
           ) : (
             <p className="bos-durum">Bir konuşma seç.</p>
           )}

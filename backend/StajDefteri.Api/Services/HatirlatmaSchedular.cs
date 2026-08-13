@@ -14,12 +14,12 @@ public class HatirlatmaScheduler : BackgroundService
         _scopeFactory = scopeFactory;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken durdurmaTokeni)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!durdurmaTokeni.IsCancellationRequested)
+        while (!stoppingToken.IsCancellationRequested)
         {
             await HatirlatmalariGonder();
-            await Task.Delay(_aralik, durdurmaTokeni);
+            await Task.Delay(_aralik, stoppingToken);
         }
     }
 
@@ -29,12 +29,10 @@ public class HatirlatmaScheduler : BackgroundService
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var bildirim = scope.ServiceProvider.GetRequiredService<BildirimServisi>();
 
-        var ogrenciler = await db.Kullanicilar
+        var ogrenciIdler = await db.Kullanicilar
             .Where(k => k.Rol == "ogrenci")
-            .Select(k => new { k.Id })
+            .Select(o => o.Id)
             .ToListAsync();
-
-        var ogrenciIdler = ogrenciler.Select(o => o.Id).ToList();
 
         var sonKayitlar = await db.DefterKayitlari
             .Where(d => ogrenciIdler.Contains(d.OgrenciId))
@@ -44,16 +42,16 @@ public class HatirlatmaScheduler : BackgroundService
 
         var bugun = DateOnly.FromDateTime(DateTime.Now);
 
-        foreach (var o in ogrenciler)
+        foreach (var ogrenciId in ogrenciIdler)
         {
-            int? gunFarki = sonKayitlar.TryGetValue(o.Id, out var t)
+            int? gunFarki = sonKayitlar.TryGetValue(ogrenciId, out var t)
                 ? bugun.DayNumber - t.DayNumber
                 : null;
 
             if (gunFarki is null || gunFarki >= GunEsigi)
             {
                 await bildirim.Ekle(
-                    o.Id,
+                    ogrenciId,
                     "Uzun süredir staj defterine kayıt girmedin. Unutma!",
                     "takip"
                 );

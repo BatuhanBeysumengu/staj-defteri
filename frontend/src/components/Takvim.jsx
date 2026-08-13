@@ -20,9 +20,14 @@ function Takvim() {
   const ayGunSayisi = new Date(yil, ay + 1, 0).getDate();
   const baslangicBosluk = (ayIlkGun.getDay() + 6) % 7;
 
+  const ayAdlari = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  const gunAdlari = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+
   const gunler = [];
-  for (let i = 0; i < baslangicBosluk; i++) gunler.push(null);
   for (let g = 1; g <= ayGunSayisi; g++) gunler.push(g);
+
+  const bosGunler = gunAdlari.slice(0, baslangicBosluk);
 
   const tarihStr = (g) =>
     `${yil}-${String(ay + 1).padStart(2, "0")}-${String(g).padStart(2, "0")}`;
@@ -32,10 +37,6 @@ function Takvim() {
 
   const ayGeri = () => setAktifAy(new Date(yil, ay - 1, 1));
   const ayIleri = () => setAktifAy(new Date(yil, ay + 1, 1));
-
-  const ayAdlari = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  const gunAdlari = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
   return (
     <div className="takvim">
@@ -52,13 +53,15 @@ function Takvim() {
       </div>
 
       <div className="takvim__grid">
-        {gunler.map((g, i) => {
-          if (g === null) return <span key={i} className="takvim__bos" />;
+        {bosGunler.map((etiket) => (
+          <span key={`bos-${etiket}`} className="takvim__bos" />
+        ))}
+        {gunler.map((g) => {
           const oSayi = gunOdevleri(g).length;
           return (
             <button
               type="button"
-              key={i}
+              key={tarihStr(g)}
               className={`takvim__gun ${oSayi > 0 ? "takvim__gun--dolu" : ""} ${seciliGun === g ? "takvim__gun--secili" : ""}`}
               onClick={() => setSeciliGun(seciliGun === g ? null : g)}
             >

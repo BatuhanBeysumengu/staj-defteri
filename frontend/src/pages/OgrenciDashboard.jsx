@@ -124,12 +124,12 @@ function OgrenciDashboard() {
         </aside>
 
         <main className="uc-panel__orta">
-        <h2 className="uc-panel__baslik">Akış</h2>
-        <Feed />
+          <h2 className="uc-panel__baslik">Akış</h2>
+          <Feed />
 
-        <h2 className="uc-panel__baslik" style={{ marginTop: "24px" }}>Kayıtlarım</h2>
-        {filtreliKayitlar.length === 0 ? (
-          <p className="bos-durum">Kayıt bulunmuyor.</p>
+          <h2 className="uc-panel__baslik" style={{ marginTop: "24px" }}>Kayıtlarım</h2>
+          {filtreliKayitlar.length === 0 ? (
+            <p className="bos-durum">Kayıt bulunmuyor.</p>
           ) : (
             filtreliKayitlar.map((kayit) => (
               <div key={kayit.id} className="kayit-satir">

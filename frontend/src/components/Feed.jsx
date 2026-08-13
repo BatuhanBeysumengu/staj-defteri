@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { feedGetir } from "../services/api";
 
+const GORUNURLUK_ETIKETLERI = {
+  public: "Herkese açık",
+  friends: "Arkadaşlar",
+};
+
 function Feed() {
   const [kayitlar, setKayitlar] = useState([]);
 
@@ -11,8 +16,7 @@ function Feed() {
     yukle();
   }, []);
 
-  const gorunurlukEtiket = (g) =>
-    g === "public" ? "Herkese açık" : g === "friends" ? "Arkadaşlar" : "Sadece ben";
+  const gorunurlukEtiket = (g) => GORUNURLUK_ETIKETLERI[g] || "Sadece ben";
 
   if (kayitlar.length === 0) {
     return <p className="bos-durum">Henüz gösterilecek kayıt yok.</p>;

@@ -21,7 +21,7 @@ function OdevVerForm({ onTamam }) {
       setSonuc({ tur: "hata", metin: "Öğrenci, başlık ve tarih gerekli" });
       return;
     }
-    const cevap = await odevVer(baslik, aciklama, tarih, parseInt(ogrenciId));
+    const cevap = await odevVer(baslik, aciklama, tarih, Number.parseInt(ogrenciId, 10));
     if (cevap.basarili) {
       setSonuc({ tur: "basari", metin: "Ödev verildi" });
       setBaslik("");

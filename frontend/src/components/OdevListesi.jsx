@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { odevlerim, odevTeslim, odevDosyaYukle, odevOnayla, odevReddet } from "../services/api";
+import { odevlerim, odevTeslim, odevDosyaYukle, odevOnayla, odevReddet, API_URL } from "../services/api";
 import { useAuth } from "../context/AuthContext";
-import { API_URL } from "../services/api";
 
 const ODEV_DURUM_ETIKETLERI = {
   onaylandi: "✓ Onaylandı",

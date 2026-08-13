@@ -13,17 +13,16 @@ namespace StajDefteri.Api.Controllers;
 [Authorize]
 public class KayitlarController : ControllerBase
 {
+    private const string GorunurlukPublic = "public";
+    private const string GorunurlukFriends = "friends";
+    private const string GorunurlukPrivate = "private";
+
     private readonly AppDbContext _db;
     private readonly LogService _logService;
-    //private readonly OcrService OcrService;
-    //private readonly PdfService _pdfService;
-
-    public KayitlarController(AppDbContext db, LogService logService)//, OcrService ocrService, PdfService pdfService)
+    public KayitlarController(AppDbContext db, LogService logService)
     {
         _db = db;
         _logService = logService;
-      //  OcrService = ocrService;
-       // _pdfService = pdfService;
     }
 
     [HttpGet("benim")]
@@ -99,8 +98,8 @@ public class KayitlarController : ControllerBase
 
         var gorunenler = kayitlar.Where(k =>
             kendisiMi ||
-            k.Gorunurluk == "public" ||
-            (k.Gorunurluk == "friends" && arkadasMi)
+            k.Gorunurluk == GorunurlukPublic ||
+            (k.Gorunurluk == GorunurlukFriends && arkadasMi)
         ).ToList();
 
         return Ok(gorunenler.Select(k => new
@@ -114,8 +113,8 @@ public class KayitlarController : ControllerBase
     {
         var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
 
-        var gecerliler = new[] { "public", "friends", "private" };
-        var gorunurluk = gecerliler.Contains(istek.Gorunurluk) ? istek.Gorunurluk : "private";
+        var gecerliler = new[] { GorunurlukPublic, GorunurlukFriends, GorunurlukPrivate };
+        var gorunurluk = gecerliler.Contains(istek.Gorunurluk) ? istek.Gorunurluk : GorunurlukPrivate;
 
         var yeniKayit = new DefterKaydi
         {
@@ -182,7 +181,7 @@ public class KayitlarController : ControllerBase
         if (kayit.OgrenciId != kullaniciId)
             return Forbid();
 
-        var gecerliler = new[] { "public", "friends", "private" };
+        var gecerliler = new[] { GorunurlukPublic, GorunurlukFriends, GorunurlukPrivate };
         if (!gecerliler.Contains(istek.Gorunurluk))
             return BadRequest(new { mesaj = "Geçersiz görünürlük" });
 
@@ -246,8 +245,8 @@ public class KayitlarController : ControllerBase
         var kayitlar = await _db.DefterKayitlari
             .Where(k =>
                 k.OgrenciId == kullaniciId ||
-                k.Gorunurluk == "public" ||
-                (k.Gorunurluk == "friends" && arkadasIdler.Contains(k.OgrenciId))
+                k.Gorunurluk == GorunurlukPublic ||
+                (k.Gorunurluk == GorunurlukFriends && arkadasIdler.Contains(k.OgrenciId))
             )
             .OrderByDescending(k => k.Tarih)
             .Take(50)

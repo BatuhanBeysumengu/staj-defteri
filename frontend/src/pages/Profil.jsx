@@ -121,21 +121,21 @@ function Profil() {
     return <div className="dashboard"><Header /><p className="bos-durum">Kullanıcı bulunamadı.</p></div>;
   }
   const handleOdevVer = async () => {
-  if (!odevBaslik.trim() || !odevTarih) {
-    setOdevSonuc({ tur: "hata", metin: "Başlık ve teslim tarihi gerekli" });
-    return;
-  }
-  const sonuc = await odevVer(odevBaslik, odevAciklama, odevTarih, profil.id);
-  if (sonuc.basarili) {
-    setOdevSonuc({ tur: "basari", metin: "Ödev verildi" });
-    setOdevBaslik("");
-    setOdevAciklama("");
-    setOdevTarih("");
-    setOdevModu(false);
-  } else {
-    setOdevSonuc({ tur: "hata", metin: sonuc.mesaj });
-  }
-};
+    if (!odevBaslik.trim() || !odevTarih) {
+      setOdevSonuc({ tur: "hata", metin: "Başlık ve teslim tarihi gerekli" });
+      return;
+    }
+    const sonuc = await odevVer(odevBaslik, odevAciklama, odevTarih, profil.id);
+    if (sonuc.basarili) {
+      setOdevSonuc({ tur: "basari", metin: "Ödev verildi" });
+      setOdevBaslik("");
+      setOdevAciklama("");
+      setOdevTarih("");
+      setOdevModu(false);
+    } else {
+      setOdevSonuc({ tur: "hata", metin: sonuc.mesaj });
+    }
+  };
 
   const kendiProfilim = kullanici.id === profil.id;
   const baglanmaGonderilebilir =
@@ -168,10 +168,10 @@ function Profil() {
           <div className="profil-ust__aksiyon">
             {!kendiProfilim && arkDurum && (
               <>
-              {kullanici.rol === "yetkili" && profil.rol === "ogrenci" && (
-                <button type="button" onClick={() => setOdevModu(true)}>Ödev Ver</button>
-              )}
-              <button type="button" onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}> Mesaj Gönder</button>
+                {kullanici.rol === "yetkili" && profil.rol === "ogrenci" && (
+                  <button type="button" onClick={() => setOdevModu(true)}>Ödev Ver</button>
+                )}
+                <button type="button" onClick={() => navigate(`/mesajlar?kisi=${profil.id}&ad=${encodeURIComponent(profil.ad)}`)}>Mesaj Gönder</button>
                 {arkDurum.durum === "yok" && (
                   <button type="button" onClick={handleArkadasEkle}>Arkadaş Ekle</button>
                 )}
@@ -209,42 +209,41 @@ function Profil() {
       )}
 
       {sonuc && (
-        
         <p className={sonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>
           {sonuc.metin}
         </p>
       )}
-          {odevModu && (
-      <div className="odev-form">
-        <h3>Ödev Ver</h3>
-        <input
-          type="text"
-          placeholder="Ödev başlığı"
-          value={odevBaslik}
-          onChange={(e) => setOdevBaslik(e.target.value)}
-        />
-        <textarea
-          placeholder="Açıklama (isteğe bağlı)"
-          value={odevAciklama}
-          onChange={(e) => setOdevAciklama(e.target.value)}
-          rows={3}
-        />
-        <label className="odev-form__tarih">
-          Son teslim tarihi:
-          <input type="date" value={odevTarih} onChange={(e) => setOdevTarih(e.target.value)} />
-        </label>
-        <div className="odev-form__aksiyon">
-          <button type="button" onClick={handleOdevVer}>Gönder</button>
-          <button type="button" className="btn--ikincil" onClick={() => setOdevModu(false)}>İptal</button>
+      {odevModu && (
+        <div className="odev-form">
+          <h3>Ödev Ver</h3>
+          <input
+            type="text"
+            placeholder="Ödev başlığı"
+            value={odevBaslik}
+            onChange={(e) => setOdevBaslik(e.target.value)}
+          />
+          <textarea
+            placeholder="Açıklama (isteğe bağlı)"
+            value={odevAciklama}
+            onChange={(e) => setOdevAciklama(e.target.value)}
+            rows={3}
+          />
+          <label className="odev-form__tarih">
+            Son teslim tarihi:
+            <input type="date" value={odevTarih} onChange={(e) => setOdevTarih(e.target.value)} />
+          </label>
+          <div className="odev-form__aksiyon">
+            <button type="button" onClick={handleOdevVer}>Gönder</button>
+            <button type="button" className="btn--ikincil" onClick={() => setOdevModu(false)}>İptal</button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {odevSonuc && (
-      <p className={odevSonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>
-        {odevSonuc.metin}
-      </p>
-)}
+      {odevSonuc && (
+        <p className={odevSonuc.tur === "basari" ? "form-mesaj--basari" : "form-mesaj--hata"}>
+          {odevSonuc.metin}
+        </p>
+      )}
 
       {kendiProfilim && (
         <div className="arkadas-liste">

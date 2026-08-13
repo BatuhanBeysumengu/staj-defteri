@@ -30,6 +30,7 @@ body.acik-tema {
   --renk-bekliyor: #f59e0b;
   --renk-onaylandi: #22c55e;
   --renk-reddedildi: #ef4444;
+  --renk-reddedildi-vurgu: #dc2626;
   --renk-reddedildi-zemin: rgba(239, 68, 68, 0.1);
 
   --bosluk-s: 8px;
@@ -190,8 +191,8 @@ textarea:focus {
 }
 
 .ust-bar__cikis:hover {
-  background: var(--renk-reddedildi);
-  border-color: var(--renk-reddedildi);
+  background: var(--renk-reddedildi-vurgu);
+  border-color: var(--renk-reddedildi-vurgu);
   color: white;
 }
 
@@ -255,7 +256,7 @@ textarea:focus {
 }
 .entry-card__durum--bekliyor { background: var(--renk-bekliyor); }
 .entry-card__durum--onaylandi { background: var(--renk-onaylandi); }
-.entry-card__durum--reddedildi { background: var(--renk-reddedildi); color: white; }
+.entry-card__durum--reddedildi { background: var(--renk-reddedildi-vurgu); color: white; }
 
 .entry-card__aksiyonlar {
   display: flex;
@@ -301,7 +302,7 @@ textarea:focus {
 }
 
 .btn--tehlike:hover {
-  background: var(--renk-reddedildi);
+  background: var(--renk-reddedildi-vurgu);
   color: white;
 }
 
@@ -1895,7 +1896,7 @@ button:disabled {
   position: absolute;
   top: 0;
   right: 0;
-  background: var(--renk-reddedildi, #e5484d);
+  background: var(--renk-reddedildi-vurgu, #dc2626);
   color: white;
   font-size: 10px;
   font-weight: 600;

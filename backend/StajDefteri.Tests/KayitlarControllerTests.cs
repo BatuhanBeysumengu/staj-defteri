@@ -23,23 +23,20 @@ public class KayitlarControllerTests
     }
 
     private KayitlarController KurController(AppDbContext db, int kullaniciId, string rol)
-{
-    var logService = new LogService(db);
-    var ocrService = new OcrService();
-    var pdfService = new PdfService();
-
-    var controller = new KayitlarController(db, logService, ocrService, pdfService);
-
-    var kimlik = new ClaimsIdentity(new[]
     {
-        new Claim("id", kullaniciId.ToString()),
-        new Claim("rol", rol),
-    });
-    controller.ControllerContext = new ControllerContext
-    {
-        HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal(kimlik) }
-    };
-    return controller;
+        var logService = new LogService(db);
+        var controller = new KayitlarController(db, logService);
+
+        var kimlik = new ClaimsIdentity(new[]
+        {
+            new Claim("id", kullaniciId.ToString()),
+            new Claim("rol", rol),
+        });
+        controller.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal(kimlik) }
+        };
+        return controller;
 }
 
     [Fact]

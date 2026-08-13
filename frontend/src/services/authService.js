@@ -12,7 +12,7 @@ export async function girisYap(email, sifre) {
 
     return await cevap.json();   
   } catch (hata) {
-    console.error("Giriş isteği başarısız:", error_);
+    console.error("Giriş isteği başarısız:", hata);
     return null;
   }
 }
