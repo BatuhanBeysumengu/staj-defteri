@@ -14,7 +14,7 @@ namespace StajDefteri.Tests;
 public class KayitlarControllerTests
 {
   
-    private AppDbContext YeniDb()
+    private static AppDbContext YeniDb()
     {
         var secenekler = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -22,7 +22,7 @@ public class KayitlarControllerTests
         return new AppDbContext(secenekler);
     }
 
-    private KayitlarController KurController(AppDbContext db, int kullaniciId, string rol)
+    private static KayitlarController KurController(AppDbContext db, int kullaniciId, string rol)
     {
         var logService = new LogService(db);
         var controller = new KayitlarController(db, logService);

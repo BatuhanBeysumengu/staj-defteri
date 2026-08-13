@@ -12,7 +12,7 @@ namespace StajDefteri.Tests;
 
 public class BaglantiTests
 {
-    private AppDbContext YeniDb()
+    private static AppDbContext YeniDb()
     {
         var secenekler = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -20,7 +20,7 @@ public class BaglantiTests
         return new AppDbContext(secenekler);
     }
 
-    private BaglantiController Kur(AppDbContext db, int kullaniciId, string rol)
+    private static BaglantiController Kur(AppDbContext db, int kullaniciId, string rol)
     {
         var controller = new BaglantiController(db);
         var kimlik = new ClaimsIdentity(new[]

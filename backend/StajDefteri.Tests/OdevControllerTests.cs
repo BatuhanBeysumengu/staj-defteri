@@ -13,7 +13,7 @@ namespace StajDefteri.Tests;
 
 public class OdevControllerTests
 {
-    private AppDbContext YeniDb()
+    private static AppDbContext YeniDb()
     {
         var secenekler = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -21,7 +21,7 @@ public class OdevControllerTests
         return new AppDbContext(secenekler);
     }
 
-    private OdevController KurController(AppDbContext db, int kullaniciId, string rol)
+    private static OdevController KurController(AppDbContext db, int kullaniciId, string rol)
     {
         var bildirim = new BildirimServisi(db);
         var controller = new OdevController(db, bildirim);

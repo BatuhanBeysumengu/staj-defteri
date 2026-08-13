@@ -11,7 +11,7 @@ namespace StajDefteri.Tests;
 
 public class BaglantiArkadaslikTests
 {
-    private AppDbContext YeniDb()
+    private static AppDbContext YeniDb()
     {
         var secenekler = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -19,7 +19,7 @@ public class BaglantiArkadaslikTests
         return new AppDbContext(secenekler);
     }
 
-    private T Kur<T>(T controller, int kullaniciId, string rol) where T : ControllerBase
+    private static T Kur<T>(T controller, int kullaniciId, string rol) where T : ControllerBase
     {
         var kimlik = new ClaimsIdentity(new[]
         {

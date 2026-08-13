@@ -13,7 +13,7 @@ namespace StajDefteri.Tests;
 
 public class MesajControllerTests
 {
-    private AppDbContext YeniDb()
+    private static AppDbContext YeniDb()
     {
         var secenekler = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -21,7 +21,7 @@ public class MesajControllerTests
         return new AppDbContext(secenekler);
     }
 
-    private MesajController KurController(AppDbContext db, int kullaniciId)
+    private static MesajController KurController(AppDbContext db, int kullaniciId)
     {
         var bildirim = new BildirimServisi(db);
         var controller = new MesajController(db, bildirim);
