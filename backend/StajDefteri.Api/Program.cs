@@ -16,11 +16,9 @@ QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();   
-builder.Services.AddScoped<OcrService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<PdfService>();
 builder.Services.AddScoped<BildirimServisi>();
 builder.Services.AddHostedService<HatirlatmaScheduler>();
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -52,7 +50,6 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

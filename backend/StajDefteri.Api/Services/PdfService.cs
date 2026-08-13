@@ -5,7 +5,7 @@ using StajDefteri.Api.Models;
 
 namespace StajDefteri.Api.Services;
 
-public class PdfService
+public static class PdfService
 {
     public static byte[] KayitlarPdf(string ogrenciAd, List<DefterKaydi> kayitlar)
     {

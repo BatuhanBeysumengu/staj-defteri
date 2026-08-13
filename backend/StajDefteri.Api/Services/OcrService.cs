@@ -2,7 +2,7 @@ using Tesseract;
 
 namespace StajDefteri.Api.Services;
 
-public class OcrService
+public static class OcrService
 {
     public static string MetinCikar(string dosyaYolu)
     {
