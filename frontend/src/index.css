@@ -2025,3 +2025,46 @@ button:disabled {
   color: #22c55e;
   white-space: nowrap;
 }
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk-m);
+}
+
+.feed-kart {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+}
+
+.feed-kart__ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--bosluk-s);
+}
+
+.feed-kart__ad {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.feed-kart__tarih {
+  font-size: 12px;
+  color: var(--renk-soluk);
+}
+
+.feed-kart__icerik {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: var(--bosluk-s);
+}
+
+.feed-kart__gorunurluk {
+  font-size: 11px;
+  color: var(--renk-soluk);
+  background: var(--renk-yuzey);
+  padding: 2px 8px;
+  border-radius: 10px;
+}

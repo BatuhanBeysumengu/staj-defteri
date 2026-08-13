@@ -231,4 +231,43 @@ public class KayitlarController : ControllerBase
         var pdfBytes = PdfService.KayitlarPdf(kullaniciAd, kayitlar);
         return File(pdfBytes, "application/pdf", "staj-defteri.pdf");
     }
+    [Authorize]
+    [HttpGet("feed")]
+    public async Task<IActionResult> Feed()
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var arkadasIdler = await _db.Arkadasliklar
+            .Where(a => a.Durum == "kabul" &&
+                        (a.GonderenId == kullaniciId || a.AliciId == kullaniciId))
+            .Select(a => a.GonderenId == kullaniciId ? a.AliciId : a.GonderenId)
+            .ToListAsync();
+
+        var kayitlar = await _db.DefterKayitlari
+            .Where(k =>
+                k.OgrenciId == kullaniciId ||
+                k.Gorunurluk == "public" ||
+                (k.Gorunurluk == "friends" && arkadasIdler.Contains(k.OgrenciId))
+            )
+            .OrderByDescending(k => k.Tarih)
+            .Take(50)
+            .ToListAsync();
+
+        var sahipIdler = kayitlar.Select(k => k.OgrenciId).Distinct().ToList();
+        var adlar = await _db.Kullanicilar
+            .Where(u => sahipIdler.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => u.Ad);
+
+        var cevap = kayitlar.Select(k => new
+        {
+            k.Id,
+            k.Icerik,
+            k.Tarih,
+            k.Gorunurluk,
+            k.OgrenciId,
+            SahipAd = adlar.TryGetValue(k.OgrenciId, out var ad) ? ad : "Bilinmeyen"
+        }).ToList();
+
+        return Ok(cevap);
+    }
 }

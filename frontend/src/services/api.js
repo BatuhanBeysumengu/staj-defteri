@@ -329,3 +329,8 @@ export async function ogrenciHatirlat(ogrenciId) {
   }
   return { basarili: true };
 }
+export async function feedGetir() {
+  const cevap = await apiIstek("/kayitlar/feed");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
