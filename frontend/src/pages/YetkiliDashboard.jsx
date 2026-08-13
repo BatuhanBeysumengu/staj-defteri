@@ -10,6 +10,7 @@ import OdevListesi from "../components/OdevListesi";
 import Modal from "../components/Modal";
 import OdevVerForm from "../components/OdevVerForm";
 import Takvim from "../components/Takvim";
+import OgrenciTakip from "../components/OgrenciTakip";
 
 function YetkiliDashboard() {
   const { kullanici } = useAuth();
@@ -60,6 +61,7 @@ function YetkiliDashboard() {
         </main>
 
         <aside className="uc-panel__sag">
+          <OgrenciTakip />
           <Takvim />
           <OdevListesi />
           <GelenIstekler />

@@ -315,3 +315,17 @@ export async function bildirimleriOkunduYap() {
   const cevap = await apiIstek("/bildirim/okundu", { method: "PUT" });
   return cevap.ok;
 }
+export async function ogrenciTakip() {
+  const cevap = await apiIstek("/takip");
+  if (!cevap.ok) return [];
+  return await cevap.json();
+}
+
+export async function ogrenciHatirlat(ogrenciId) {
+  const cevap = await apiIstek(`/takip/hatirlat/${ogrenciId}`, { method: "POST" });
+  if (!cevap.ok) {
+    const hata = await cevap.json();
+    return { basarili: false, mesaj: hata.mesaj || "Gönderilemedi" };
+  }
+  return { basarili: true };
+}

@@ -15,15 +15,15 @@ public class KayitlarController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly LogService _logService;
-    private readonly OcrService _ocrService;
-    private readonly PdfService _pdfService;
+    //private readonly OcrService OcrService;
+    //private readonly PdfService _pdfService;
 
-    public KayitlarController(AppDbContext db, LogService logService, OcrService ocrService, PdfService pdfService)
+    public KayitlarController(AppDbContext db, LogService logService)//, OcrService ocrService, PdfService pdfService)
     {
         _db = db;
         _logService = logService;
-        _ocrService = ocrService;
-        _pdfService = pdfService;
+      //  OcrService = ocrService;
+       // _pdfService = pdfService;
     }
 
     [HttpGet("benim")]

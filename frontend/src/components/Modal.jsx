@@ -3,7 +3,7 @@ function Modal({ baslik, acik, onKapat, children }) {
 
   return (
     <div className="modal-arka" onClick={onKapat}>
-      <div className="modal-kutu" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-kutu" onClick={(e) => e.stopPropagation()}> 
         <div className="modal-baslik">
           <h3>{baslik}</h3>
           <button className="modal-kapat" onClick={onKapat}>✕</button>

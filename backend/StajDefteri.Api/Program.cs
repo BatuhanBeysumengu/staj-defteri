@@ -22,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<PdfService>();
 builder.Services.AddScoped<BildirimServisi>();
+builder.Services.AddHostedService<HatirlatmaScheduler>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=stajdefteri.db"));
 

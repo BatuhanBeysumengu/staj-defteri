@@ -1973,3 +1973,55 @@ button:disabled {
   font-size: 11px;
   color: var(--renk-soluk);
 }
+.ogrenci-takip {
+  background: var(--renk-kart);
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius);
+  padding: var(--bosluk-m);
+}
+
+.ogrenci-takip__baslik {
+  font-size: 15px;
+  margin-bottom: var(--bosluk-m);
+}
+
+.takip-oge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--bosluk-s);
+  border-radius: var(--radius-s);
+  margin-bottom: var(--bosluk-s);
+  border-left: 3px solid var(--renk-cizgi);
+}
+
+.takip-oge--iyi { border-left-color: #22c55e; }
+.takip-oge--orta { border-left-color: #eab308; }
+.takip-oge--kritik { border-left-color: #ef4444; }
+
+.takip-oge__bilgi {
+  display: flex;
+  flex-direction: column;
+}
+
+.takip-oge__ad {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.takip-oge__durum {
+  font-size: 12px;
+  color: var(--renk-soluk);
+}
+
+.takip-oge__buton {
+  font-size: 12px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.takip-oge__gonderildi {
+  font-size: 12px;
+  color: #22c55e;
+  white-space: nowrap;
+}
