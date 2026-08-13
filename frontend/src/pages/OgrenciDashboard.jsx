@@ -70,7 +70,7 @@ function OgrenciDashboard() {
         <aside className="uc-panel__sol">
           <div className="kayit-form">
             <label className="foto-yukle">
-              📷 Defter fotoğrafı yükle
+              <span>📷 Defter fotoğrafı yükle</span>
               <input type="file" accept="image/*" onChange={handleFotograf} style={{ display: "none" }} />
             </label>
             {yukleniyor && <p className="foto-durum">Metin okunuyor...</p>}
@@ -82,7 +82,7 @@ function OgrenciDashboard() {
             />
             <div className="kayit-form__alt">
               <label className="gorunurluk-secici">
-                Görünürlük:
+                <span>Görünürlük:</span>
                 <select value={gorunurluk} onChange={(e) => setGorunurluk(e.target.value)}>
                   <option value="private">🔒 Sadece ben</option>
                   <option value="friends">👥 Arkadaşlarım</option>
@@ -100,11 +100,11 @@ function OgrenciDashboard() {
               <div className="pdf-arac__panel">
                 <div className="pdf-arac__tarih">
                   <label>
-                    Başlangıç
+                    <span>Başlangıç</span>
                     <input type="date" value={baslangic} onChange={(e) => setBaslangic(e.target.value)} />
                   </label>
                   <label>
-                    Bitiş
+                    <span>Bitiş</span>
                     <input type="date" value={bitis} onChange={(e) => setBitis(e.target.value)} />
                   </label>
                 </div>

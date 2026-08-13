@@ -37,7 +37,7 @@ function OdevVerForm({ onTamam }) {
   return (
     <div className="odev-ver-form">
       <label>
-        Öğrenci
+        <span>Öğrenci</span>
         <select value={ogrenciId} onChange={(e) => setOgrenciId(e.target.value)}>
           <option value="">Öğrenci seçin</option>
           {ogrenciler.map((o) => (
@@ -61,7 +61,7 @@ function OdevVerForm({ onTamam }) {
       />
 
       <label>
-        Son teslim tarihi
+        <span>Son teslim tarihi</span>
         <input type="date" value={tarih} onChange={(e) => setTarih(e.target.value)} />
       </label>
 

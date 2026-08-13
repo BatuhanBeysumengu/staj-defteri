@@ -145,6 +145,38 @@ function Profil() {
 
   const durumEtiket = (d) => KAYIT_DURUM_ETIKETLERI[d] || "Bekliyor";
 
+  const kayitlarIcerigiGoster = () => {
+    if (kayitlar.length === 0) {
+      return <p className="bos-durum">Görüntülenecek kayıt yok.</p>;
+    }
+    if (seciliKayit) {
+      return (
+        <KayitDetay
+          kayit={seciliKayit}
+          kendiProfilim={kendiProfilim}
+          onGorunurlukDegis={handleGorunurlukDegis}
+          onGeri={() => setSeciliKayit(null)}
+        />
+      );
+    }
+    return (
+      <div className="kayit-grid">
+        {kayitlar.map((k) => (
+          <button type="button" key={k.id} className="kayit-kare" onClick={() => setSeciliKayit(k)}>
+            <div className="kayit-kare__ust">
+              <span className="kayit-kare__tarih">{k.tarih}</span>
+              <span className="kayit-kare__ikon">{gorunurlukIkon(k.gorunurluk)}</span>
+            </div>
+            <p className="kayit-kare__onizleme">{k.icerik}</p>
+            <span className={`kayit-kare__durum kayit-kare__durum--${k.durum}`}>
+              {durumEtiket(k.durum)}
+            </span>
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="dashboard">
       <Header />
@@ -229,7 +261,7 @@ function Profil() {
             rows={3}
           />
           <label className="odev-form__tarih">
-            Son teslim tarihi:
+            <span>Son teslim tarihi:</span>
             <input type="date" value={odevTarih} onChange={(e) => setOdevTarih(e.target.value)} />
           </label>
           <div className="odev-form__aksiyon">
@@ -267,31 +299,7 @@ function Profil() {
       <div className="profil-kayitlar">
         <h2>Kayıtlar</h2>
 
-        {kayitlar.length === 0 ? (
-          <p className="bos-durum">Görüntülenecek kayıt yok.</p>
-        ) : seciliKayit ? (
-          <KayitDetay
-            kayit={seciliKayit}
-            kendiProfilim={kendiProfilim}
-            onGorunurlukDegis={handleGorunurlukDegis}
-            onGeri={() => setSeciliKayit(null)}
-          />
-        ) : (
-          <div className="kayit-grid">
-            {kayitlar.map((k) => (
-              <button type="button" key={k.id} className="kayit-kare" onClick={() => setSeciliKayit(k)}>
-                <div className="kayit-kare__ust">
-                  <span className="kayit-kare__tarih">{k.tarih}</span>
-                  <span className="kayit-kare__ikon">{gorunurlukIkon(k.gorunurluk)}</span>
-                </div>
-                <p className="kayit-kare__onizleme">{k.icerik}</p>
-                <span className={`kayit-kare__durum kayit-kare__durum--${k.durum}`}>
-                  {durumEtiket(k.durum)}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
+        {kayitlarIcerigiGoster()}
       </div>
     </div>
   );

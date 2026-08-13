@@ -1487,7 +1487,19 @@ button:disabled {
   padding: var(--bosluk-m);
 }
 
+.modal-arka__kapat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: default;
+}
+
 .modal-kutu {
+  position: relative;
   background: var(--renk-kart);
   border: 1px solid var(--renk-cizgi);
   border-radius: var(--radius);
