@@ -73,7 +73,8 @@ public class KayitlarController : ControllerBase
             k.RedTarihi,
             k.ReddedenId != null && isimler.TryGetValue(k.ReddedenId.Value, out var reddedenAd)
     ? reddedenAd
-    : null
+    : null,
+            k.FotografYolu
         )).ToList();
 
         return Ok(cevap);
@@ -170,6 +171,23 @@ public class KayitlarController : ControllerBase
         return Ok(kayit);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Sil(int id)
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var kayit = await _db.DefterKayitlari.FindAsync(id);
+        if (kayit is null) return NotFound();
+
+        if (kayit.OgrenciId != kullaniciId)
+            return Forbid();
+
+        _db.DefterKayitlari.Remove(kayit);
+        await _db.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [HttpPut("{id}/gorunurluk")]
     public async Task<IActionResult> GorunurlukGuncelle(int id, GorunurlukIstegi istek)
     {
@@ -230,6 +248,36 @@ public class KayitlarController : ControllerBase
         var pdfBytes = PdfService.KayitlarPdf(kullaniciAd, kayitlar);
         return File(pdfBytes, "application/pdf", "staj-defteri.pdf");
     }
+    [HttpPost("{id}/fotograf")]
+    public async Task<IActionResult> FotografYukle(int id, IFormFile dosya)
+    {
+        var kullaniciId = int.Parse(User.FindFirst("id")!.Value);
+
+        var kayit = await _db.DefterKayitlari.FindAsync(id);
+        if (kayit is null) return NotFound();
+
+        if (kayit.OgrenciId != kullaniciId)
+            return Forbid();
+
+        if (dosya is null || dosya.Length == 0)
+            return BadRequest(new { mesaj = "Dosya seçilmedi" });
+
+        var klasor = Path.Combine("wwwroot", "kayitlar");
+        Directory.CreateDirectory(klasor);
+
+        var dosyaAdi = $"{Guid.NewGuid()}{Path.GetExtension(dosya.FileName)}";
+        var tamYol = Path.Combine(klasor, dosyaAdi);
+
+        using (var stream = new FileStream(tamYol, FileMode.Create))
+        {
+            await dosya.CopyToAsync(stream);
+        }
+
+        kayit.FotografYolu = $"/kayitlar/{dosyaAdi}";
+        await _db.SaveChangesAsync();
+
+        return Ok(new { fotografYolu = kayit.FotografYolu });
+    }
     [Authorize]
     [HttpGet("feed")]
     public async Task<IActionResult> Feed()
@@ -264,6 +312,7 @@ public class KayitlarController : ControllerBase
             k.Tarih,
             k.Gorunurluk,
             k.OgrenciId,
+            k.FotografYolu,
             SahipAd = adlar.TryGetValue(k.OgrenciId, out var ad) ? ad : "Bilinmeyen"
         }).ToList();
 

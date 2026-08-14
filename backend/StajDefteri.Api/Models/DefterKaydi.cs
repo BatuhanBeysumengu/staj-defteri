@@ -11,4 +11,5 @@ public class DefterKaydi
     public DateTime? RedTarihi { get; set; }
     public int? ReddedenId { get; set; }
     public string Gorunurluk { get; set; } = "private"; 
+    public string? FotografYolu { get; set; }
 }

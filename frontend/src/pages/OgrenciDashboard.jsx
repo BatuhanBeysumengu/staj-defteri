@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import EntryCard from "../components/EntryCard";
 import Header from "../components/Header";
 import { useKayit } from "../context/KayitContext";
-import { ocrIstek, pdfIndir } from "../services/api";
+import { ocrIstek, pdfIndir, kayitFotografYukle, kayitSil } from "../services/api";
 import ArkadaslikIstekleri from "../components/ArkadaslikIstekleri";
 import OdevListesi from "../components/OdevListesi";
 import Takvim from "../components/Takvim";
@@ -18,16 +18,22 @@ function OgrenciDashboard() {
   const [baslangic, setBaslangic] = useState("");
   const [bitis, setBitis] = useState("");
   const [gorunurluk, setGorunurluk] = useState("private");
+  const [fotograf, setFotograf] = useState(null);
 
   useEffect(() => {
     kayitlariYukle();
   }, []);
 
-  const handleEkle = () => {
+  const handleEkle = async () => {
     if (!yeniIcerik.trim()) return;
-    kayitEkle(yeniIcerik, gorunurluk);
+    const yeniKayitId = await kayitEkle(yeniIcerik, gorunurluk);
+    if (yeniKayitId && fotograf) {
+      await kayitFotografYukle(yeniKayitId, fotograf);
+      kayitlariYukle();
+    }
     setYeniIcerik("");
     setGorunurluk("private");
+    setFotograf(null);
   };
 
   const handleFotograf = async (e) => {
@@ -61,6 +67,12 @@ function OgrenciDashboard() {
     await pdfIndir(secililer);
   };
 
+  const handleSil = async (kayitId) => {
+    if (!window.confirm("Bu kaydı silmek istediğinize emin misiniz?")) return;
+    await kayitSil(kayitId);
+    kayitlariYukle();
+  };
+
   return (
     <div className="dashboard">
       <Header />
@@ -73,6 +85,11 @@ function OgrenciDashboard() {
               <span>📷 Defter fotoğrafı yükle</span>
               <input type="file" accept="image/*" onChange={handleFotograf} style={{ display: "none" }} />
             </label>
+            <label className="foto-yukle">
+              <span>🖼️ Fotoğraf ekle</span>
+              <input type="file" accept="image/*" onChange={(e) => setFotograf(e.target.files[0])} style={{ display: "none" }} />
+            </label>
+            {fotograf && <p className="foto-durum">{fotograf.name} eklenecek</p>}
             {yukleniyor && <p className="foto-durum">Metin okunuyor...</p>}
             <textarea
               placeholder="Bugün ne yaptınız?"
@@ -149,6 +166,8 @@ function OgrenciDashboard() {
                     redAciklamasi={kayit.redAciklamasi}
                     redTarihi={kayit.redTarihi}
                     reddedenAd={kayit.reddedenAd}
+                    fotografYolu={kayit.fotografYolu}
+                    onSil={() => handleSil(kayit.id)}
                   />
                 </div>
               </div>

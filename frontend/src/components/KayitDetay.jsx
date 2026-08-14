@@ -10,7 +10,7 @@ import {
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
+function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onSil, onGeri }) {
   const { kullanici } = useAuth();
 
   const [begeni, setBegeni] = useState({ sayi: 0, benBegendim: false });
@@ -108,6 +108,12 @@ function KayitDetay({ kayit, kendiProfilim, onGorunurlukDegis, onGeri }) {
           <button type="button" className="btn--ikincil" onClick={handlePaylasAc}>
             📤 Arkadaşa Gönder
           </button>
+
+          {onSil && (
+            <button type="button" className="btn--tehlike" onClick={() => onSil(kayit.id)}>
+              🗑️ Sil
+            </button>
+          )}
         </div>
 
         {paylasSonuc && <p className="form-mesaj--basari">{paylasSonuc}</p>}

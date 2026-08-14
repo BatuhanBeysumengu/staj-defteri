@@ -10,7 +10,8 @@ import {
   kullaniciKayitlari,
   gorunurlukGuncelle,
   arkadasListesi,
-  odevVer
+  odevVer,
+  kayitSil
 } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import KayitDetay from "../components/KayitDetay";
@@ -114,6 +115,13 @@ function Profil() {
     }
   };
 
+  const handleKayitSil = async (kayitId) => {
+    if (!window.confirm("Bu kaydı silmek istediğinize emin misiniz?")) return;
+    await kayitSil(kayitId);
+    setKayitlar(await kullaniciKayitlari(id));
+    setSeciliKayit(null);
+  };
+
   if (yukleniyor) {
     return <div className="dashboard"><Header /><p className="bos-durum">Yükleniyor...</p></div>;
   }
@@ -155,6 +163,7 @@ function Profil() {
           kayit={seciliKayit}
           kendiProfilim={kendiProfilim}
           onGorunurlukDegis={handleGorunurlukDegis}
+          onSil={kendiProfilim ? handleKayitSil : undefined}
           onGeri={() => setSeciliKayit(null)}
         />
       );

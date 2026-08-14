@@ -244,6 +244,14 @@ textarea:focus {
   color: var(--renk-metin);
 }
 
+.entry-card__foto {
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--renk-cizgi);
+}
+
 .entry-card__durum {
   font-size: 11px;
   font-weight: 600;
@@ -2067,10 +2075,45 @@ button:disabled {
   margin-bottom: var(--bosluk-s);
 }
 
+.feed-kart__foto {
+  display: block;
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--renk-cizgi);
+  margin-bottom: var(--bosluk-s);
+}
+
 .feed-kart__gorunurluk {
   font-size: 11px;
   color: var(--renk-soluk);
   background: var(--renk-yuzey);
   padding: 2px 8px;
   border-radius: 10px;
+}
+.foto-ekle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--renk-ana);
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid var(--renk-cizgi);
+  border-radius: var(--radius-s);
+}
+
+.foto-ad {
+  font-size: 12px;
+  color: var(--renk-soluk);
+  margin-left: 8px;
+}
+
+.kayit-foto {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-s);
+  margin-top: var(--bosluk-s);
 }

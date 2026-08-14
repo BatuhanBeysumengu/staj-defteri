@@ -18,11 +18,11 @@ export function KayitProvider({ children }) {
       method: "POST",
       body: JSON.stringify({ icerik, gorunurluk }),
     });
-    if (cevap.ok) {
-      kayitlariYukle();
-      const yeni = await cevap.json();
-      setKayitlar((onceki) => [yeni, ...onceki]);
-    }
+    if (!cevap.ok) return null;
+    const yeni = await cevap.json();
+    kayitlariYukle();
+    setKayitlar((onceki) => [yeni, ...onceki]);
+    return yeni.id;
   }, [kayitlariYukle]);
 
   const kayitOnayla = useCallback(async (id) => {

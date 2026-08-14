@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { feedGetir } from "../services/api";
+import { feedGetir, API_URL } from "../services/api";
 
 const GORUNURLUK_ETIKETLERI = {
   public: "Herkese açık",
@@ -31,6 +31,13 @@ function Feed() {
             <span className="feed-kart__tarih">{k.tarih}</span>
           </div>
           <p className="feed-kart__icerik">{k.icerik}</p>
+          {k.fotografYolu && (
+            <img
+              className="feed-kart__foto"
+              src={`${API_URL.replace("/api", "")}${k.fotografYolu}`}
+              alt="Defter fotoğrafı"
+            />
+          )}
           <span className="feed-kart__gorunurluk">{gorunurlukEtiket(k.gorunurluk)}</span>
         </div>
       ))}

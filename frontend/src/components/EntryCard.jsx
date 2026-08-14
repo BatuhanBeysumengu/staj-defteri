@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "../services/api";
 
 function EntryCard({
   tarih,
@@ -8,8 +9,10 @@ function EntryCard({
   redAciklamasi,
   redTarihi,
   reddedenAd,
+  fotografYolu,
   onOnayla,
   onReddet,
+  onSil,
 }) {
   const [redModu, setRedModu] = useState(false);
   const [aciklama, setAciklama] = useState("");
@@ -34,6 +37,14 @@ function EntryCard({
 
       <p className="entry-card__icerik">{icerik}</p>
 
+      {fotografYolu && (
+        <img
+          className="entry-card__foto"
+          src={`${API_URL.replace("/api", "")}${fotografYolu}`}
+          alt="Defter fotoğrafı"
+        />
+      )}
+
       <span className={`entry-card__durum entry-card__durum--${durum}`}>
         {durum}
       </span>
@@ -57,13 +68,16 @@ function EntryCard({
           rows={2}
         />
       )}
-      {(onOnayla || onReddet) && (
+      {(onOnayla || onReddet || onSil) && (
         <div className="entry-card__aksiyonlar">
           {onOnayla && !redModu && <button type="button" onClick={onOnayla}>Onayla</button>}
           {onReddet && (
             <button type="button" className="btn--tehlike" onClick={handleReddet}>
               {redModu ? "Reddi Gönder" : "Reddet"}
             </button>
+          )}
+          {onSil && !redModu && (
+            <button type="button" className="btn--tehlike" onClick={onSil}>🗑️ Sil</button>
           )}
         </div>
       )}

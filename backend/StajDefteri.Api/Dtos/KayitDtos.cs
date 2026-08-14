@@ -11,7 +11,8 @@ public record KayitCevabi(
     int OgrenciId,
     string? RedAciklamasi,
     DateTime? RedTarihi,
-    string? ReddedenAd
+    string? ReddedenAd,
+    string? FotografYolu
 );
 public record PdfIstegi(int[] KayitIdler);
 public record GorunurlukIstegi(string Gorunurluk);

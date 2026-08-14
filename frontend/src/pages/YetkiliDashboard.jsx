@@ -47,6 +47,7 @@ function YetkiliDashboard() {
                 redAciklamasi={kayit.redAciklamasi}
                 redTarihi={kayit.redTarihi}
                 reddedenAd={kullanici.ad}
+                fotografYolu={kayit.fotografYolu}
                 onOnayla={
                   kayit.durum === "bekliyor" ? () => kayitOnayla(kayit.id) : undefined
                 }

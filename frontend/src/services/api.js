@@ -334,3 +334,21 @@ export async function feedGetir() {
   if (!cevap.ok) return [];
   return await cevap.json();
 }
+export async function kayitSil(kayitId) {
+  const cevap = await apiIstek(`/kayitlar/${kayitId}`, { method: "DELETE" });
+  return cevap.ok;
+}
+
+export async function kayitFotografYukle(kayitId, dosya) {
+  const token = localStorage.getItem("token");
+  const form = new FormData();
+  form.append("dosya", dosya);
+
+  const cevap = await fetch(`${API_URL}/kayitlar/${kayitId}/fotograf`, {
+    method: "POST",
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: form,
+  });
+  if (!cevap.ok) return null;
+  return await cevap.json();
+}
